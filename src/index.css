@@ -1,13 +1,73 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+	font-family: Arial, sans-serif;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*:focus {
+	outline: none;
+} 
+
+a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #ffffff;
+}
+
+.author {
+	display: flex;
+	align-self: flex-start;
+}
+
+.author__avatar {
+	width: 64px;
+	height: 64px;
+	object-fit: contain;
+	border-radius: 100%;
+}
+
+.author__name {
+	align-self: center;
+	margin-left: 10px;
+	font-size: 18px;
+	color: #ffffff;
+}
+
+.date-likes-container {
+	display: flex;
+	width: 100%;
+	align-self: flex-end;
+}
+
+.likes {
+	display: flex;
+	align-self: flex-end;
+	align-items: center;
+	margin-left: auto;
+	padding: 5px;
+	border: 2px solid #80808075;
+	border-radius: 5px;
+	color: #ffffff;
+}
+
+.likes-counter {
+	margin-left: 5px;
+	transform: translateY(2px);
+}
+
+.heart-shown {
+	display: block;
+}
+
+.heart-hided {
+	display: none;
+}
+
+.date {
+	align-self: flex-end;
+	color: #ffffff70;
 }

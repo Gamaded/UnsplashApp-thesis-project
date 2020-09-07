@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {createStore} from 'redux';
+import {createBrowserHistory} from 'history';
+import {BrowserRouter as Router} from 'react-router-dom';
+
+import UnsplashApp from './containers/App';
+import photosData from './reducers/reducers.js';
+
+let history = createBrowserHistory();
+
+let initialState = [];
+
+let store = createStore(photosData, initialState);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <UnsplashApp history={history} store={store}/>
+  </Router>,
   document.getElementById('root')
 );
 
