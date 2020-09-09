@@ -7,7 +7,8 @@ class Header extends React.Component {
 	constructor(props) {
 		super(props);
 		this.code = props.code;
-		let {login} = props;
+		this.unsplash = props.unsplash;
+		console.log(props)
 	}
 
 	render() {
@@ -16,10 +17,17 @@ class Header extends React.Component {
 				<img className="userAvatar" src=""/>
 				<div className="userName">Ruslan</div>
 				<button className="auth" onClick={() => {
-					if (this.code === '1') {
+					if (this.code === undefined) {
+						const authenticationUrl = this.unsplash.auth.getAuthenticationUrl([
+							"public",
+							"write_likes"
+						]);
 
+						window.location.assign(authenticationUrl);
 					}
-				}}>Auth</button>
+				}}>{
+					this.code === undefined ? 'Auth' : 'Exit'
+				}</button>
 			</header>
 		)
 	}

@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 
 let ShowFeed = (props) => {
 	let {photosData} = props;
-	
 	return(
 		<ol className="photos-feed-container">
 			<Link to='/fullscreen'>
