@@ -1,14 +1,17 @@
 let photosData = (state, action) => {
 	switch (action.type) {
 		case 'RECEIVE_PHOTOS_LIST':
-			return state.photos = [
+			state.photos = [
 				...state.photos,
 				action.photo
-			]
+			];
+			return state;
+			break;
 
-		// case 'AUTH':
-		// 	console.log(state.isAuth)
-			
+		case 'AUTH':
+			state.isAuth = "true";
+			return state;
+			break;
 
 		default: return state;
 	}

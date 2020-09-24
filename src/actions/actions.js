@@ -5,8 +5,8 @@ export let addPhoto = (photo) => {
 	}
 }
 
-// export let login = () => {
-// 	return {
-// 		type: "AUTH"
-// 	}
-// }
+export let login = () => {
+	return {
+		type: "AUTH"
+	}
+}

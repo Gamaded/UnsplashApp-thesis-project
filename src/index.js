@@ -12,12 +12,11 @@ import photosData from './reducers/reducers.js';
 let history = createBrowserHistory();
 
 let initialState = {
-	photos: [{name: 'andrey'}, {name: 'lera'}],
-	isAuth: false
+	photos: [],
+	isAuth: 'false'
 };
 
 let store = createStore(photosData, initialState);
-console.log(store)
 
 ReactDOM.render(
   <Router>

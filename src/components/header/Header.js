@@ -8,7 +8,6 @@ class Header extends React.Component {
 		super(props);
 		this.code = props.code;
 		this.unsplash = props.unsplash;
-		console.log(props)
 	}
 
 	render() {
@@ -25,9 +24,11 @@ class Header extends React.Component {
 
 						window.location.assign(authenticationUrl);
 					}
-				}}>{
-					this.code === undefined ? 'Auth' : 'Exit'
-				}</button>
+				}}>
+					{
+						this.code === undefined ? 'Auth' : 'Exit'
+					}
+				</button>
 			</header>
 		)
 	}
