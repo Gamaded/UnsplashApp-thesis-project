@@ -5,14 +5,15 @@ import {
 	Route,
     Switch,
     Redirect,
-    Link,
     withRouter
 } from 'react-router-dom';
+
+import {addPhoto, login, getUsersLikes, addPhotosList, like, unlike} from '../actions/actions.js';
+
 import ShowFullscreen from '../components/fullscreen-viewing/ShowFullscreen.js';
 import ShowFeed from '../components/photos-feed/ShowFeed.js';
 import Header from '../components/header/Header.js';
-import {addPhoto} from '../actions/actions.js';
-import {login} from '../actions/actions.js';
+import Popup from '../components/Popup/Popup.js';
 
 let code = window.location.search.split('code=')[1];
 
@@ -29,49 +30,84 @@ class UnsplashApp extends React.Component {
 	constructor(props) {
 		super(props);
 		this.history = props.history;
-		this.photosData = props.photosData;
+		this.appData = props.appData;
 		this.login = props.login;
 		this.addPhoto = props.addPhoto;
+		this.getUsersLikes = props.getUsersLikes;
+		this.addPhotosList = props.addPhotosList;
+		this.like = props.like;
+		this.unlike = props.unlike;
+		this.state = {
+			popup: false
+		}
+	}
+
+	help() {
+		console.log(this);
 	}
 	
 	componentDidMount() {
-		console.log(this.photosData)
+		unsplash.photos.listPhotos(1, 10)
+			.then(res => res.json())
+			.then(json => {
+				this.addPhotosList(json);
+				this.setState(this.appData);
+			});
+
 		if (code !== undefined) {
 			unsplash.auth.userAuthentication(code)
 				.then(res => res.json())
 				.then(json => {
 					unsplash.auth.setBearerToken(json.access_token);
 					if (unsplash._bearerToken !== undefined) {
-						console.log(unsplash._bearerToken)
-						this.login();
+						unsplash.currentUser.profile()
+							.then(res => res.json())
+							.then(json => {
+								this.login(json);
+								unsplash.users.likes(json.username)
+									.then(res => res.json())
+									.then(json => {
+										console.log(json)
+										this.getUsersLikes(json);
+										this.setState(this.appData);
+										console.log(this.appData)
+									})
+							})
 					}
-					console.log(json)
-					console.log(unsplash)
-					console.log(this.photosData)
 				})
 		}
-		unsplash.photos.listPhotos(1, 10)
-			.then(res => res.json())
-			.then(json => {
-				console.log(json)
-				json.map(photo => {
-					this.addPhoto(photo)
-				})
-				console.log(this.photosData)
-				this.setState(this.photosData)
-			});
-		alert('fuck me')
-	}
+	};
 	
 	render() {
-		
+		console.log(this.appData.usersLikes)
+		this.help()
 		return (
 			<Switch>
 				<Route history={this.history} exact path="/home">
-					<Header unsplash={unsplash} code={code}/>
-					<ShowFeed unsplash={unsplash} addPhoto={this.addPhoto} photosData={this.photosData}/>
+					<Header unsplash={unsplash} user={this.appData.user} isAuth={this.appData.isAuth}/>
+					<main  	onClick={(event) => {
+								if (this.appData.isAuth === false && event.target.className === "show-full") {
+									this.setState({
+										popup: true
+									})
+								}
+							}}>
+						<ShowFeed isAuth={this.appData.isAuth} 
+								  photosList={this.appData.photosList} 
+								  addPhoto={this.addPhoto}
+								  usersLikes={this.appData.usersLikes}
+								  help={this.help} />
+						<Popup popup={this.state.popup} onClick={() => {
+							alert('fuck me')
+						}}/>
+					</main>
 				</Route>
-				<Route history={this.history} path="/fullscreen" photosData={this.photosData} component={ShowFullscreen}></Route>
+				<Route history={this.history} path="/fullscreen">
+					<ShowFullscreen unsplash={unsplash} 
+									appData={this.appData}
+									like={this.like}
+									unlike={this.unlike}/>
+				</Route>
 				<Route history={this.history} exact path="/">
 					<Redirect to="/home"></Redirect>
 				</Route>
@@ -83,14 +119,18 @@ class UnsplashApp extends React.Component {
 
 let mapStateToProps = (state) => {
 	return {
-		photosData: state
+		appData: state
 	}
 }
 
 let mapDispatchToProps = (dispatch) => {
 	return {
+		addPhotosList: (photosList) => dispatch(addPhotosList(photosList)),
 		addPhoto: (photo) => dispatch(addPhoto(photo)),
-		login: () => dispatch(login())
+		login: (user) => dispatch(login(user)),
+		getUsersLikes: (usersLikes) => dispatch(getUsersLikes(usersLikes)),
+		like: (photo) => dispatch(like(photo)),
+		unlike: (photo) => dispatch(unlike(photo))
 	}
 }
 

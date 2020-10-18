@@ -1,37 +1,36 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
 
 import './Header.css';
 
-class Header extends React.Component {
-	constructor(props) {
-		super(props);
-		this.code = props.code;
-		this.unsplash = props.unsplash;
-	}
+function Header(props) {
+	let {isAuth ,unsplash, user} = props;
 
-	render() {
-		return(
-			<header>
-				<img className="userAvatar" src=""/>
-				<div className="userName">Ruslan</div>
+	function AuthButton() {
+		if (isAuth === false) {
+			return(
 				<button className="auth" onClick={() => {
-					if (this.code === undefined) {
-						const authenticationUrl = this.unsplash.auth.getAuthenticationUrl([
+					if (isAuth === false) {
+						const authenticationUrl = unsplash.auth.getAuthenticationUrl([
 							"public",
 							"write_likes"
 						]);
 
 						window.location.assign(authenticationUrl);
 					}
-				}}>
-					{
-						this.code === undefined ? 'Auth' : 'Exit'
-					}
-				</button>
-			</header>
-		)
-	}
+				}}>Войти</button>
+			)
+		} else {
+			return null;
+		}
+	} 
+
+	return(
+		<header>
+			<img className="userAvatar" alt='your avatar' src={user.profile_image.medium}/>
+			<div className="userName">{user.username}</div>
+			<AuthButton />
+		</header>
+	)
 }
 
 export default Header;

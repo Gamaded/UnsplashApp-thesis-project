@@ -7,16 +7,22 @@ import {createBrowserHistory} from 'history';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import UnsplashApp from './containers/App';
-import photosData from './reducers/reducers.js';
+import appData from './reducers/reducers.js';
 
 let history = createBrowserHistory();
 
 let initialState = {
-	photos: [],
-	isAuth: 'false'
+	photosList: [],
+	currentPhoto: {},
+	user: {
+		username: 'Гость',
+		profile_image: {medium: 'https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg'}
+	},
+	usersLikes: [],
+	isAuth: false
 };
 
-let store = createStore(photosData, initialState);
+let store = createStore(appData, initialState);
 
 ReactDOM.render(
   <Router>

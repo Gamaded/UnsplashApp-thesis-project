@@ -49,9 +49,9 @@ a:visited {
 	align-items: center;
 	margin-left: auto;
 	padding: 5px;
-	border: 2px solid #80808075;
+	background-color: #42424230;
 	border-radius: 5px;
-	color: #ffffff;
+	color: #ffffff90;
 }
 
 .likes-counter {
@@ -59,15 +59,9 @@ a:visited {
 	transform: translateY(2px);
 }
 
-.heart-shown {
-	display: block;
-}
-
-.heart-hided {
-	display: none;
-}
-
 .date {
 	align-self: flex-end;
-	color: #ffffff70;
+	color: #ffffff90;
+	background-color: #42424230;
+	border-radius: 5px;
 }
