@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 function ShowFeedItem(props) {
-	const {item, isAuth, addPhoto, usersLikes} = props;
+	const {item, isAuth, addPhoto, usersLikes, like, unlike, unsplash} = props;
 
 	let regexp = /[:T-]/g;
 	let created = item.created_at.split(regexp).splice(0, 3);
@@ -33,7 +33,14 @@ function ShowFeedItem(props) {
 	function Likes() {
 		if (isAuth === false || usersLikes === []) {
 			return(
-				<div className="likes">
+				<div className="likes" onClick={() => {
+					unsplash.photos.likePhoto(item.id)
+				 		.then(res => res.json())
+				 		.then(json => {
+				 			like(item);
+				 			console.log("succ");
+				 		})
+				}}>
 					<img className="heart-empty heart-shown" alt='i like it!' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAABWElEQVQ4jc2UsUpcURRF13kzI5pCMJV2OpIEQb9B0liIGMgHiJ2MGIhYpbOL2vkBIlgLwcLCQmsViV0UtJCkC6SLYGGybK5ymYxRnxYeOM3e+6x77oX34LlXNAtqDegHLoGziLhs8qtAL1AFTpv9yIIdwDwwAnxLA6+ADWAhxT4B48AJ8AcYALaA+Yi4yE/tUHfUKbXI9Ir6Qd1MPaNWMr9QG+q22p4DF9Wp295FnVan/+M31M83b6Ye5ps9tNKmh2q1AOrAUUT8LQtMs8dAvQAqQK0sLKsaUBTAd6DvCYB9wI8iIn4Dv9TXZUnqG+BnRJxfC2PqyiOAq+pos/hFfVcC9l5db2W8VL+qww+AvU0zXbcFetQDdeIesMmU7b4r2Jmuv6a+aOG3q8vpU2y9WYuhQp1T99TBTB9S99VZ9Z8/1X3Ag+qu+jH1bn5AqVLb1KXUbY+Clakrp7kYeRvuWdYAAAAASUVORK5CYII="/>
 					<div className="likes-counter">{item.likes}</div>
 				</div>

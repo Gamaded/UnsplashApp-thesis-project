@@ -8,6 +8,8 @@ class ShowFeed extends React.Component {
 		super(props);
 		this.unsplash = props.unsplash;
 		this.addPhoto = props.addPhoto;
+		this.like = props.like;
+		this.unlike = props.unlike;
 	}
 	
 	render() {
@@ -15,66 +17,71 @@ class ShowFeed extends React.Component {
 		this.photosList = this.props.photosList;
 		this.usersLikes = this.props.usersLikes;
 
+		let columnA = [];
+		let columnB = [];
+		let columnC = [];
+
 		for (let i = 0, j = 0; j < this.photosList.length; i++, j++) {
 			i === 3 ? i = 0 : i = i;
 
 			switch (i) {
 				case 0:
-					this.photosList[j].column = "a";
+					columnA.push(this.photosList[j]);
 					break;
 				case 1:
-					this.photosList[j].column = "b";
+					columnB.push(this.photosList[j]);
 					break;
 				case 2:
-					this.photosList[j].column = "c";
+					columnC.push(this.photosList[j]);
 					break;
 			}
-		} 
-
-		console.log(this.photosList)
+		}
 
 		return(
 			<div className="photos-feed">
 				<ol className="photos-feed-container">
-					 {this.photosList.map(item => {
-					 	if (item.column === "a") {
-					 		return (
-	 							<ShowFeedItem
-	 								key={item.id} 
-	 								item={item}
-	 								isAuth={this.isAuth}
-	 								addPhoto={this.addPhoto}
-	 								usersLikes={this.usersLikes}/>
-	 						)
-					 	}
+					 {columnA.map(item => {
+				 		return (
+ 							<ShowFeedItem
+ 								key={item.id} 
+ 								item={item}
+ 								isAuth={this.isAuth}
+ 								addPhoto={this.addPhoto}
+ 								usersLikes={this.usersLikes}
+ 								like={this.like}
+ 								unlike={this.unlike}
+ 								unsplash={this.unsplash}/>
+ 						)
  					})}
 				</ol>
 				<ol className="photos-feed-container">
-					{this.photosList.map(item => {
-					 	if (item.column === "b") {
-					 		return (
-	 							<ShowFeedItem
-	 								key={item.id} 
-	 								item={item}
-	 								isAuth={this.isAuth}
-	 								addPhoto={this.addPhoto}
-	 								usersLikes={this.usersLikes}/>
-	 						)
-					 	}
+					{columnB.map(item => {
+				 		return (
+ 							<ShowFeedItem
+ 								key={item.id} 
+ 								item={item}
+ 								isAuth={this.isAuth}
+ 								addPhoto={this.addPhoto}
+ 								usersLikes={this.usersLikes}
+ 								like={this.like}
+ 								unlike={this.unlike}
+ 								unsplash={this.unsplash}/>
+ 						)
  					})}
 				</ol>
 				<ol className="photos-feed-container">
-					{this.photosList.map(item => {
-					 	if (item.column === "c") {
-					 		return (
-	 							<ShowFeedItem
-	 								key={item.id} 
-	 								item={item}
-	 								isAuth={this.isAuth}
-	 								addPhoto={this.addPhoto}
-	 								usersLikes={this.usersLikes}/>
-	 						)
-					 	}
+					{columnC.map(item => {
+				 		return (
+ 							<ShowFeedItem
+ 								key={item.id} 
+ 								item={item}
+ 								isAuth={this.isAuth}
+ 								addPhoto={this.addPhoto}
+ 								usersLikes={this.usersLikes}
+ 								like={this.like}
+ 								unlike={this.unlike}
+ 								unsplash={this.unsplash}/>
+ 						)
  					})}
 				</ol>
 					{

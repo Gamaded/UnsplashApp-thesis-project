@@ -42,6 +42,7 @@ class UnsplashApp extends React.Component {
 		this.addPhotosList = props.addPhotosList;
 		this.like = props.like;
 		this.unlike = props.unlike;
+		this.windowOffset = null;
 		this.state = {
 			popup: false
 		}
@@ -102,7 +103,10 @@ class UnsplashApp extends React.Component {
 		return (
 			<Switch>
 				<Route history={this.history} exact path="/home">
-					<Header unsplash={unsplash} user={this.appData.user} isAuth={this.appData.isAuth}/>
+					<Header unsplash={unsplash} 
+							user={this.appData.user} 
+							isAuth={this.appData.isAuth}/>
+
 					<main className="main-wrapper"	onClick={(event) => {
 								if (this.appData.isAuth === false && event.target.className === "show-full" && this.state.popup === false) {
 									this.setState({
@@ -113,20 +117,24 @@ class UnsplashApp extends React.Component {
 						<ShowFeed isAuth={this.appData.isAuth} 
 								  photosList={this.appData.photosList} 
 								  addPhoto={this.addPhoto}
-								  usersLikes={this.appData.usersLikes} />
-								  
-						<button className="show-more-photos" onClick={() => {
-							console.log(window.pageYOffset);
+								  usersLikes={this.appData.usersLikes}
+								  like={this.like}
+								  unlike={this.unlike} 
+								  unsplash={unsplash}/>
 
-							console.log(this.appData.counter);
+						<button className="show-more-photos" onClick={() => {
+							console.log(window.scrollY);
+							this.windowOffset = window.scrollY;
 
 							unsplash.photos.listPhotos(this.appData.counter + 1, 10)
 								.then(res => res.json())
 								.then(json => {
 									this.addPhotosList(json);
 									this.setState(this.appData);
-									console.log(this.appData);
+									window.scrollTo(0, this.windowOffset);
 								});
+								console.log(window.pageYOffset);
+							
 						}}> Загрузить ещё </button>
 						<Popup popup={this.state.popup}/>
 					</main>
