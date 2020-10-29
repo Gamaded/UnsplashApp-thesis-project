@@ -9,10 +9,11 @@ let appData = (state, action) => {
 			state.isAuth = true;
 			return state;
 
-		default: return state;
-
 		case "SET_PHOTOS_LIST":
-			state.photosList = action.photosList;
+			state.counter++;
+			for (let i = 0; i < action.photosList.length; i++) {
+				state.photosList.push(action.photosList[i]);
+			}
 			return state;
 
 		case "GET_USERS_LIKES":
@@ -33,6 +34,8 @@ let appData = (state, action) => {
 				}
 			}
 			return state;
+
+		default: return state;
 	}
 }
 

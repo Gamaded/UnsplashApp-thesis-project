@@ -4,16 +4,12 @@ import './Popup.css';
 
 function Popup(props) {
 	let {popup} = props;
-	console.log(popup)
 
-	if (popup === true) {
-		return(
-			<div className="popup">
-				Для просмотра полноразмерных фотографий необходимо авторизоваться
-			</div>)
-	} else {
-		return null;
-	}
+	return popup ? 
+		<div className="popup">
+			Для просмотра полноразмерных фотографий необходимо авторизоваться
+		</div> :
+		null;
 }
 
 export default Popup;

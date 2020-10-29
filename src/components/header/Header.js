@@ -6,23 +6,17 @@ function Header(props) {
 	let {isAuth ,unsplash, user} = props;
 
 	function AuthButton() {
-		if (isAuth === false) {
-			return(
-				<button className="auth" onClick={() => {
-					if (isAuth === false) {
-						const authenticationUrl = unsplash.auth.getAuthenticationUrl([
-							"public",
-							"write_likes"
-						]);
+		return !isAuth ?
+			<button className="auth" onClick={() => {
+				const authenticationUrl = unsplash.auth.getAuthenticationUrl([
+					"public",
+					"write_likes"
+				]);
 
-						window.location.assign(authenticationUrl);
-					}
-				}}>Войти</button>
-			)
-		} else {
-			return null;
-		}
-	} 
+				window.location.assign(authenticationUrl);
+			}}>Войти</button> :
+			null;
+	}
 
 	return(
 		<header>

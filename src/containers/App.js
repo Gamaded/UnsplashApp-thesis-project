@@ -15,7 +15,7 @@ import ShowFeed from '../components/photos-feed/ShowFeed.js';
 import Header from '../components/header/Header.js';
 import Popup from '../components/Popup/Popup.js';
 
-let code = window.location.search.split('code=')[1];
+let code =  window.location.search.split('code=')[1]
 
 let unsplash = new Unsplash({
 	accessKey: "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w",
@@ -23,8 +23,13 @@ let unsplash = new Unsplash({
 	callbackUrl: "http://localhost:3000/",
 	headers: {
 		"client_id": "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w"
-	},
+	}
 });
+
+
+// if ( localStorage.getItem("bearerToken") ) {
+// 	unsplash._bearerToken = localStorage.getItem("bearerToken");
+// }
 
 class UnsplashApp extends React.Component {
 	constructor(props) {
@@ -41,24 +46,41 @@ class UnsplashApp extends React.Component {
 			popup: false
 		}
 	}
-
-	help() {
-		console.log(this);
-	}
 	
 	componentDidMount() {
-		unsplash.photos.listPhotos(1, 10)
-			.then(res => res.json())
-			.then(json => {
-				this.addPhotosList(json);
-				this.setState(this.appData);
-			});
+		if (this.appData.counter === 1) {
+			console.log(this.appData.counter);
+			unsplash.photos.listPhotos(1, 10)
+				.then(res => res.json())
+				.then(json => {
+					this.addPhotosList(json);
+					if (this.appData.isAuth === false) {
+						this.setState(this.appData);
+					}
+				});
+		}
+
+		if (unsplash._bearerToken !== undefined) {
+			unsplash.currentUser.profile()
+				.then(res => res.json())
+				.then(json => {
+					console.log(json)
+					this.login(json);
+					unsplash.users.likes(json.username)
+						.then(res => res.json())
+						.then(json => {
+							this.getUsersLikes(json)
+							this.setState(this.appData);
+						})
+				})
+		}
 
 		if (code !== undefined) {
 			unsplash.auth.userAuthentication(code)
 				.then(res => res.json())
 				.then(json => {
 					unsplash.auth.setBearerToken(json.access_token);
+					localStorage.setItem("bearerToken", json.access_token);
 					if (unsplash._bearerToken !== undefined) {
 						unsplash.currentUser.profile()
 							.then(res => res.json())
@@ -67,10 +89,8 @@ class UnsplashApp extends React.Component {
 								unsplash.users.likes(json.username)
 									.then(res => res.json())
 									.then(json => {
-										console.log(json)
 										this.getUsersLikes(json);
 										this.setState(this.appData);
-										console.log(this.appData)
 									})
 							})
 					}
@@ -79,14 +99,12 @@ class UnsplashApp extends React.Component {
 	};
 	
 	render() {
-		console.log(this.appData.usersLikes)
-		this.help()
 		return (
 			<Switch>
 				<Route history={this.history} exact path="/home">
 					<Header unsplash={unsplash} user={this.appData.user} isAuth={this.appData.isAuth}/>
-					<main  	onClick={(event) => {
-								if (this.appData.isAuth === false && event.target.className === "show-full") {
+					<main className="main-wrapper"	onClick={(event) => {
+								if (this.appData.isAuth === false && event.target.className === "show-full" && this.state.popup === false) {
 									this.setState({
 										popup: true
 									})
@@ -95,11 +113,22 @@ class UnsplashApp extends React.Component {
 						<ShowFeed isAuth={this.appData.isAuth} 
 								  photosList={this.appData.photosList} 
 								  addPhoto={this.addPhoto}
-								  usersLikes={this.appData.usersLikes}
-								  help={this.help} />
-						<Popup popup={this.state.popup} onClick={() => {
-							alert('fuck me')
-						}}/>
+								  usersLikes={this.appData.usersLikes} />
+								  
+						<button className="show-more-photos" onClick={() => {
+							console.log(window.pageYOffset);
+
+							console.log(this.appData.counter);
+
+							unsplash.photos.listPhotos(this.appData.counter + 1, 10)
+								.then(res => res.json())
+								.then(json => {
+									this.addPhotosList(json);
+									this.setState(this.appData);
+									console.log(this.appData);
+								});
+						}}> Загрузить ещё </button>
+						<Popup popup={this.state.popup}/>
 					</main>
 				</Route>
 				<Route history={this.history} path="/fullscreen">

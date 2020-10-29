@@ -18,6 +18,11 @@ a:visited {
 	color: #ffffff;
 }
 
+.main-wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
 .author {
 	display: flex;
 	align-self: flex-start;
@@ -61,7 +66,15 @@ a:visited {
 
 .date {
 	align-self: flex-end;
+	padding: 3px;
 	color: #ffffff90;
 	background-color: #42424230;
 	border-radius: 5px;
+}
+
+.show-more-photos {
+	width: 150px;
+	height: 30px;
+	margin: 0 auto;
+	align-self: flex-end;
 }

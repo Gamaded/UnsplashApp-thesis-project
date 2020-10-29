@@ -19,7 +19,8 @@ let initialState = {
 		profile_image: {medium: 'https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg'}
 	},
 	usersLikes: [],
-	isAuth: false
+	isAuth: false,
+	counter: 1
 };
 
 let store = createStore(appData, initialState);

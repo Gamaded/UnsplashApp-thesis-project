@@ -4,46 +4,34 @@ import {Link} from 'react-router-dom';
 function ShowFeedItem(props) {
 	const {item, isAuth, addPhoto, usersLikes} = props;
 
-	console.log(usersLikes);
-
 	let regexp = /[:T-]/g;
 	let created = item.created_at.split(regexp).splice(0, 3);
 
-	const month = {
-		1: "Января",
-		2: "Февраля",
-		3: "Марта",
-		4: "Апреля",
-		5: "Мая",
-		6: "Июня",
-		7: "Июля",
-		8: "Августа",
-		9: "Сентября",
-		10: "Октября",
-		11: "Ноября",
-		12: "Декабря"
-	}
+	const month = ["Января",
+		"Февраля",
+		"Марта",
+		"Апреля",
+		"Мая",
+		"Июня",
+		"Июля",
+		"Августа",
+		"Сентября",
+		"Октября",
+		"Ноября",
+		"Декабря"]
 
 	function RedirectToFull() {
-		if (isAuth === false) {
-			return(
-				<div className="show-full">
-				</div>
-			)
-		} else {
-			return(
-				<Link to={{
-					pathname: '/fullscreen'
-				}}>
-					<div className="show-full" onClick={() => {addPhoto(item)}}></div>
-				</Link>
-			)
-		}
-
+		return isAuth ?
+			<Link to={{
+				pathname: '/fullscreen'
+			}}>
+				<div className="show-full" onClick={() => {addPhoto(item)}}></div>
+			</Link> :
+			<div className="show-full"></div>;
 	}
 
 	function Likes() {
-		if (isAuth === false) {
+		if (isAuth === false || usersLikes === []) {
 			return(
 				<div className="likes">
 					<img className="heart-empty heart-shown" alt='i like it!' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAABWElEQVQ4jc2UsUpcURRF13kzI5pCMJV2OpIEQb9B0liIGMgHiJ2MGIhYpbOL2vkBIlgLwcLCQmsViV0UtJCkC6SLYGGybK5ymYxRnxYeOM3e+6x77oX34LlXNAtqDegHLoGziLhs8qtAL1AFTpv9yIIdwDwwAnxLA6+ADWAhxT4B48AJ8AcYALaA+Yi4yE/tUHfUKbXI9Ir6Qd1MPaNWMr9QG+q22p4DF9Wp295FnVan/+M31M83b6Ye5ps9tNKmh2q1AOrAUUT8LQtMs8dAvQAqQK0sLKsaUBTAd6DvCYB9wI8iIn4Dv9TXZUnqG+BnRJxfC2PqyiOAq+pos/hFfVcC9l5db2W8VL+qww+AvU0zXbcFetQDdeIesMmU7b4r2Jmuv6a+aOG3q8vpU2y9WYuhQp1T99TBTB9S99VZ9Z8/1X3Ag+qu+jH1bn5AqVLb1KXUbY+Clakrp7kYeRvuWdYAAAAASUVORK5CYII="/>
@@ -80,7 +68,7 @@ function ShowFeedItem(props) {
 					<div className="author__name"><a href={item.user.links.html} target="_blank" rel="noopener noreferrer">{item.user.username}</a></div>
 				</div>
 				<div className="date-likes-container">
-					<div className="date">{`${created[2]} ${month[created[1]]} ${created[0]}`}</div>
+					<div className="date">{`${created[2]} ${month[created[1] - 1]} ${created[0]}`}</div>
 					<Likes />
 				</div>
 			</div>
