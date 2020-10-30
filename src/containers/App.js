@@ -20,16 +20,15 @@ let code =  window.location.search.split('code=')[1]
 let unsplash = new Unsplash({
 	accessKey: "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w",
 	secret: "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
-	callbackUrl: "http://localhost:3000/",
+	callbackUrl: "http://gamaded.xyz/",
 	headers: {
 		"client_id": "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w"
 	}
 });
 
-
-// if ( localStorage.getItem("bearerToken") ) {
-// 	unsplash._bearerToken = localStorage.getItem("bearerToken");
-// }
+if ( localStorage.getItem("bearerToken") ) {
+	unsplash._bearerToken = localStorage.getItem("bearerToken");
+}
 
 class UnsplashApp extends React.Component {
 	constructor(props) {
@@ -98,10 +97,6 @@ class UnsplashApp extends React.Component {
 	};
 	
 	render() {
-		if (this.state) {
-			window.scrollTo(0, this.state.windowOffset);
-		}
-
 		return (
 			<Switch>
 				<Route history={this.history} exact path="/home">
@@ -114,11 +109,6 @@ class UnsplashApp extends React.Component {
 									this.setState({
 										popup: true
 									})
-								}
-
-								if (event.target.className === "show-full") {
-									console.log(window.scrollY)
-									this.setState({windowOffset: window.scrollY});
 								}
 							}}>
 						<ShowFeed isAuth={this.appData.isAuth} 
@@ -144,11 +134,12 @@ class UnsplashApp extends React.Component {
 						<Popup popup={this.state.popup}/>
 					</main>
 				</Route>
-				<Route history={this.history} path="/fullscreen">
+				<Route path="/fullscreen">
 					<ShowFullscreen unsplash={unsplash} 
 									appData={this.appData}
 									like={this.like}
-									unlike={this.unlike}/>
+									unlike={this.unlike}
+									history={this.history}/>
 				</Route>
 				<Route history={this.history} exact path="/">
 					<Redirect to="/home"></Redirect>

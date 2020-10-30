@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
 
 import './ShowFullscreen.css';
 
 let ShowFullscreeen = (props) => {
-	const {unsplash, appData, like, unlike} = props;
+	const {unsplash, appData, like, unlike, history} = props;
 
 	const currentPhoto = appData.currentPhoto;
 	const usersLikes = appData.usersLikes;
-	console.log(usersLikes);
 
 	const month = {
 		1: "Января",
@@ -69,9 +67,9 @@ let ShowFullscreeen = (props) => {
 	return(
 		<div className="fullscreen-viewing__container">
 			<header className="fullscreen-viewing__header">
-			<Link to='/home'>
-				<button className="back-arrow"></button>
-			</Link>
+			<button className="back-arrow" onClick={() => {
+				history.goBack();
+			}}></button>
 				<div className="fullscreen-viewing__author author">
 					<img className="author__avatar" alt="author's avatar" src={currentPhoto.user.profile_image.medium}/>
 					<div className="author__name">

@@ -17,7 +17,6 @@ class ShowFeed extends React.Component {
 
 	checkWindowWidth() {
 		if (window.innerWidth > 1024) {
-			console.log(this)
 			this.setState({numberForAdaptive: 3})
 		} else if (window.innerWidth <= 1024 && window.innerWidth > 575) {
 			this.setState({numberForAdaptive: 2})
