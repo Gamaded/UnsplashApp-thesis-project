@@ -7,7 +7,7 @@ function Popup(props) {
 
 	return popup ? 
 		<div className="popup">
-			Для просмотра полноразмерных фотографий необходимо авторизоваться
+			Необходимо авторизоваться
 		</div> :
 		null;
 }

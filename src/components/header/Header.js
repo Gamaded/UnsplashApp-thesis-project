@@ -19,7 +19,7 @@ function Header(props) {
 	}
 
 	return(
-		<header>
+		<header className="header">
 			<img className="userAvatar" alt='your avatar' src={user.profile_image.medium}/>
 			<div className="userName">{user.username}</div>
 			<AuthButton />

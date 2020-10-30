@@ -42,16 +42,15 @@ class UnsplashApp extends React.Component {
 		this.addPhotosList = props.addPhotosList;
 		this.like = props.like;
 		this.unlike = props.unlike;
-		this.windowOffset = null;
 		this.state = {
-			popup: false
+			popup: false,
+			windowOffset: 0
 		}
 	}
 	
 	componentDidMount() {
 		if (this.appData.counter === 1) {
-			console.log(this.appData.counter);
-			unsplash.photos.listPhotos(1, 10)
+			unsplash.photos.listPhotos(1, 15)
 				.then(res => res.json())
 				.then(json => {
 					this.addPhotosList(json);
@@ -65,7 +64,6 @@ class UnsplashApp extends React.Component {
 			unsplash.currentUser.profile()
 				.then(res => res.json())
 				.then(json => {
-					console.log(json)
 					this.login(json);
 					unsplash.users.likes(json.username)
 						.then(res => res.json())
@@ -100,6 +98,10 @@ class UnsplashApp extends React.Component {
 	};
 	
 	render() {
+		if (this.state) {
+			window.scrollTo(0, this.state.windowOffset);
+		}
+
 		return (
 			<Switch>
 				<Route history={this.history} exact path="/home">
@@ -108,10 +110,15 @@ class UnsplashApp extends React.Component {
 							isAuth={this.appData.isAuth}/>
 
 					<main className="main-wrapper"	onClick={(event) => {
-								if (this.appData.isAuth === false && event.target.className === "show-full" && this.state.popup === false) {
+								if (this.appData.isAuth === false && (event.target.className === "show-full" || event.target.classList.contains("heart"))  && this.state.popup === false) {
 									this.setState({
 										popup: true
 									})
+								}
+
+								if (event.target.className === "show-full") {
+									console.log(window.scrollY)
+									this.setState({windowOffset: window.scrollY});
 								}
 							}}>
 						<ShowFeed isAuth={this.appData.isAuth} 
@@ -123,17 +130,15 @@ class UnsplashApp extends React.Component {
 								  unsplash={unsplash}/>
 
 						<button className="show-more-photos" onClick={() => {
-							console.log(window.scrollY);
-							this.windowOffset = window.scrollY;
+							this.setState({windowOffset: window.scrollY});
 
-							unsplash.photos.listPhotos(this.appData.counter + 1, 10)
+							unsplash.photos.listPhotos(this.appData.counter + 1, 15)
 								.then(res => res.json())
 								.then(json => {
 									this.addPhotosList(json);
 									this.setState(this.appData);
-									window.scrollTo(0, this.windowOffset);
+									window.scrollTo(0, this.state.windowOffset);
 								});
-								console.log(window.pageYOffset);
 							
 						}}> Загрузить ещё </button>
 						<Popup popup={this.state.popup}/>

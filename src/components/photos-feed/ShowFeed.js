@@ -10,9 +10,31 @@ class ShowFeed extends React.Component {
 		this.addPhoto = props.addPhoto;
 		this.like = props.like;
 		this.unlike = props.unlike;
+		this.state = {
+			numberForAdaptive: null
+		}
+	}
+
+	checkWindowWidth() {
+		if (window.innerWidth > 1024) {
+			console.log(this)
+			this.setState({numberForAdaptive: 3})
+		} else if (window.innerWidth <= 1024 && window.innerWidth > 575) {
+			this.setState({numberForAdaptive: 2})
+		} else if (window.innerWidth < 575) {
+			this.setState({numberForAdaptive: 1})
+		}
+	}
+
+	componentDidMount() {
+		this.checkWindowWidth()
 	}
 	
 	render() {
+		window.onresize = () => {
+			this.checkWindowWidth()
+		}
+
 		this.isAuth = this.props.isAuth;
 		this.photosList = this.props.photosList;
 		this.usersLikes = this.props.usersLikes;
@@ -22,7 +44,7 @@ class ShowFeed extends React.Component {
 		let columnC = [];
 
 		for (let i = 0, j = 0; j < this.photosList.length; i++, j++) {
-			i === 3 ? i = 0 : i = i;
+			i === this.state.numberForAdaptive ? i = 0 : i = i;
 
 			switch (i) {
 				case 0:
@@ -54,7 +76,7 @@ class ShowFeed extends React.Component {
  						)
  					})}
 				</ol>
-				<ol className="photos-feed-container">
+				<ol className="photos-feed-container photos-feed-container-second">
 					{columnB.map(item => {
 				 		return (
  							<ShowFeedItem
@@ -69,7 +91,7 @@ class ShowFeed extends React.Component {
  						)
  					})}
 				</ol>
-				<ol className="photos-feed-container">
+				<ol className="photos-feed-container photos-feed-container-third">
 					{columnC.map(item => {
 				 		return (
  							<ShowFeedItem
@@ -84,19 +106,6 @@ class ShowFeed extends React.Component {
  						)
  					})}
 				</ol>
-					{
-						// this.photosList.map(item => {
-						// 	return (
-						// 		<ShowFeedItem
-						// 			key={item.id} 
-						// 			item={item}
-						// 			isAuth={this.isAuth}
-						// 			addPhoto={this.addPhoto}
-						// 			usersLikes={this.usersLikes}/>
-						// 	)
-						// })
-					}
-				
 			</div>
 		)
 	}

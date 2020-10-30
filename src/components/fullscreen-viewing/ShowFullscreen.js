@@ -68,18 +68,18 @@ let ShowFullscreeen = (props) => {
 
 	return(
 		<div className="fullscreen-viewing__container">
-			<div className="fullscreen-viewing__content">
-				<div className="fullscreen-viewing__header">
-				<Link to='/home'>
-					<button className="back-arrow"></button>
-				</Link>
-					<div className="fullscreen-viewing__author author">
-						<img className="author__avatar" alt="author's avatar" src={currentPhoto.user.profile_image.medium}/>
-						<div className="author__name">
-							<a href={currentPhoto.user.links.html} target="_blank" rel="noopener noreferrer">{currentPhoto.user.username}</a>
-						</div>
+			<header className="fullscreen-viewing__header">
+			<Link to='/home'>
+				<button className="back-arrow"></button>
+			</Link>
+				<div className="fullscreen-viewing__author author">
+					<img className="author__avatar" alt="author's avatar" src={currentPhoto.user.profile_image.medium}/>
+					<div className="author__name">
+						<a href={currentPhoto.user.links.html} target="_blank" rel="noopener noreferrer">{currentPhoto.user.username}</a>
 					</div>
 				</div>
+			</header>
+			<div className="fullscreen-viewing__content">
 				<img className="fullscreen-viewing__photo" alt={currentPhoto.alt_description} src={currentPhoto.urls.full}/>
 				<div className="fullscreen-viewing__footer">
 					<div className="date-likes-container">

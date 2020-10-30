@@ -4,7 +4,7 @@
 	box-sizing: border-box;
 }
 
-header {
+.header {
 	position: fixed;
 	z-index: 10;
 	display: flex;
