@@ -20,7 +20,7 @@ let code =  window.location.search.split('code=')[1]
 let unsplash = new Unsplash({
 	accessKey: "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w",
 	secret: "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
-	callbackUrl: "http://gamaded.xyz/",
+	callbackUrl: "http://gamaded.xyz",
 	headers: {
 		"client_id": "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w"
 	}
@@ -46,19 +46,8 @@ class UnsplashApp extends React.Component {
 			windowOffset: 0
 		}
 	}
-	
-	componentDidMount() {
-		if (this.appData.counter === 1) {
-			unsplash.photos.listPhotos(1, 15)
-				.then(res => res.json())
-				.then(json => {
-					this.addPhotosList(json);
-					if (this.appData.isAuth === false) {
-						this.setState(this.appData);
-					}
-				});
-		}
 
+	setProfile() {
 		if (unsplash._bearerToken !== undefined) {
 			unsplash.currentUser.profile()
 				.then(res => res.json())
@@ -72,6 +61,21 @@ class UnsplashApp extends React.Component {
 						})
 				})
 		}
+	}
+	
+	componentDidMount() {
+		if (this.appData.counter === 1) {
+			unsplash.photos.listPhotos(1, 15)
+				.then(res => res.json())
+				.then(json => {
+					this.addPhotosList(json);
+					if (this.appData.isAuth === false) {
+						this.setState(this.appData);
+					}
+				});
+		}
+
+		this.setProfile();
 
 		if (code !== undefined) {
 			unsplash.auth.userAuthentication(code)
@@ -79,19 +83,7 @@ class UnsplashApp extends React.Component {
 				.then(json => {
 					unsplash.auth.setBearerToken(json.access_token);
 					localStorage.setItem("bearerToken", json.access_token);
-					if (unsplash._bearerToken !== undefined) {
-						unsplash.currentUser.profile()
-							.then(res => res.json())
-							.then(json => {
-								this.login(json);
-								unsplash.users.likes(json.username)
-									.then(res => res.json())
-									.then(json => {
-										this.getUsersLikes(json);
-										this.setState(this.appData);
-									})
-							})
-					}
+					this.setProfile();
 				})
 		}
 	};

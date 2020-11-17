@@ -43,7 +43,7 @@ class ShowFeed extends React.Component {
 		let columnC = [];
 
 		for (let i = 0, j = 0; j < this.photosList.length; i++, j++) {
-			i === this.state.numberForAdaptive ? i = 0 : i = i;
+			i = i === this.state.numberForAdaptive ? 0 : i;
 
 			switch (i) {
 				case 0:
