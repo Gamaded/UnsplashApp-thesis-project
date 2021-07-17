@@ -40,7 +40,8 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "devDependencies": {
-    "@types/unsplash-js": "^7.0.0"
+    "@types/unsplash-js": "^7.0.0",
+    "eslint": "^7.30.0"
   },
   "author": "Ruslan Karimov",
   "license": "MIT"
