@@ -20,7 +20,7 @@ let code =  window.location.search.split('code=')[1]
 let unsplash = new Unsplash({
 	accessKey: "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w",
 	secret: "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
-	callbackUrl: "http://gamaded.xyz",
+	callbackUrl: "http://localhost:3000/",
 	headers: {
 		"client_id": "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w"
 	}
