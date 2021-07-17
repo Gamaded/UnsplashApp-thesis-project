@@ -4,6 +4,7 @@
   ],
   "extends": ["eslint:all", "plugin:react/all"],
   "rules": {
+    "array-element-newline": "off",
     "linebreak-style": "off",
     "no-ternary": "off",
     "multiline-ternary": "off",
@@ -36,7 +37,6 @@
     "no-undefined": "off",
     "function-call-argument-newline": "off",
     "arrow-body-style": "off",
-    "array-element-newline": ["error", "never"],
     "max-len": "off",
     "arrow-parens": "off",
     "padded-blocks": "off",
