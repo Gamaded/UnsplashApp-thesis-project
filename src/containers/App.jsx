@@ -1,4 +1,6 @@
 import React from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {auth, getCode, getPhotosFromUnsplash} from "../store/reducers/getDataFromUnsplash";
 
 // import {
 //     Route,
@@ -14,24 +16,25 @@ import React from "react";
 // import Header from "../components/header/Header.jsx";
 // import Popup from "../components/Popup/Popup.jsx";
 
-// const code = window.location.search.split("code=")[1];
-
-// const unsplash = new Unsplash({
-//     "accessKey": "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w",
-//     "secret": "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
-//     "callbackUrl": "http://localhost:3000/",
-//     "headers": {
-//         "client_id": "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w"
-//     }
-// });
+const code = window.location.search.split("code=")[1];
 
 // if (localStorage.getItem("bearerToken")) {
 //     unsplash.bearerToken = localStorage.getItem("bearerToken");
 // }
 
-function UnsplashApp (props) {
-    console.log(props);
-    console.log("hello");
+function UnsplashApp () {
+    const photosList = useSelector(state => state.photosList);
+    const counter = useSelector(state => state.counter);
+    const isAuth = useSelector(state => state.isAuth);
+    console.log(photosList);
+    console.log(counter);
+
+    const dispatch = useDispatch();
+
+    if (code && !isAuth) {
+        dispatch(auth(code));
+    }
+
     // const {history, appData} = props;
     // const [popup, setPopup] = useState(false);
     // const [windowOffset, setWindowOffset] = useState(0);
@@ -51,15 +54,6 @@ function UnsplashApp (props) {
     //     }
     // }
 
-    // useEffect(() => {
-    //     if (appData.counter === 1) {
-    //         unsplash.photos.listPhotos(1, 15)
-    //             .then(res => res.json())
-    //             .then(json => {
-    //                 addPhotosList(json);
-    //             });
-    //     }
-
     //     setProfile();
 
     //     if (code !== undefined) {
@@ -74,7 +68,25 @@ function UnsplashApp (props) {
     // });
 
     return (
-        <div />
+        <div>
+            <button
+                type="button"
+                onClick={() => {
+                    dispatch(getPhotosFromUnsplash(counter));
+                }}
+            >
+                {"get photos"}
+            </button>
+
+            <button
+                type="button"
+                onClick={() => {
+                    getCode();
+                }}
+            >
+                {"auth"}
+            </button>
+        </div>
     // <Switch>
     //     <Route history={history} exact path="/home">
     //         <Header

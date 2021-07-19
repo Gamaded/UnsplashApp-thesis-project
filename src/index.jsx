@@ -2,17 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import {createBrowserHistory} from "history";
-import {BrowserRouter as Router} from "react-router-dom";
-import getPhotosFromUnsplash from "./store/reducers/getPhotosFromUnsplash";
+import {Provider} from "react-redux";
 import UnsplashApp from "./containers/App";
 import store from "./store/store.js";
 
 const history = createBrowserHistory();
-store.dispatch(getPhotosFromUnsplash);
 
 ReactDOM.render(
-    <Router>
-        <UnsplashApp history={history} store={store} />
-    </Router>,
+    <Provider store={store}>
+        <UnsplashApp history={history} />
+    </Provider>,
     document.getElementById("root")
 );
