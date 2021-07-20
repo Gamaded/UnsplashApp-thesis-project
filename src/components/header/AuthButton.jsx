@@ -1,15 +1,17 @@
 import React from "react";
+import {useSelector} from "react-redux";
+import {getCode} from "../../store/reducers/getDataFromUnsplash.js";
 
-function AuthButton (props) {
-    const {isAuth, unsplash} = props;
+function AuthButton () {
+    const isAuth = useSelector(state => state.isAuth);
+
     if (!isAuth) {
         return (
             <button
                 className="auth"
                 type="button"
                 onClick={() => {
-                    const authenticationUrl = unsplash.auth.getAuthenticationUrl(["public", "write_likes"]);
-                    window.location.assign(authenticationUrl);
+                    getCode();
                 }}
             >
                 {"Войти"}

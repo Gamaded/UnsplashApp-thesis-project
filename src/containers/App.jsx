@@ -1,19 +1,14 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {auth, getCode, getPhotosFromUnsplash} from "../store/reducers/getDataFromUnsplash";
+import {auth} from "../store/reducers/getDataFromUnsplash";
 
-// import {
-//     Route,
-//     Switch,
-//     Redirect,
-//     withRouter
-// } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 
 // import {addPhoto, login, getUsersLikes, addPhotosList, like, unlike} from "../store/actions/actions.js";
 
 // import ShowFullscreen from "../components/fullscreen-viewing/ShowFullscreen.jsx";
-// import ShowFeed from "../components/photos-feed/ShowFeed.jsx";
-// import Header from "../components/header/Header.jsx";
+import ShowFeed from "../components/photos-feed/ShowFeed.jsx";
+import Header from "../components/header/Header.jsx";
 // import Popup from "../components/Popup/Popup.jsx";
 
 const code = window.location.search.split("code=")[1];
@@ -23,11 +18,7 @@ const code = window.location.search.split("code=")[1];
 // }
 
 function UnsplashApp () {
-    const photosList = useSelector(state => state.photosList);
-    const counter = useSelector(state => state.counter);
     const isAuth = useSelector(state => state.isAuth);
-    console.log(photosList);
-    console.log(counter);
 
     const dispatch = useDispatch();
 
@@ -68,25 +59,17 @@ function UnsplashApp () {
     // });
 
     return (
-        <div>
-            <button
-                type="button"
-                onClick={() => {
-                    dispatch(getPhotosFromUnsplash(counter));
-                }}
-            >
-                {"get photos"}
-            </button>
-
-            <button
-                type="button"
-                onClick={() => {
-                    getCode();
-                }}
-            >
-                {"auth"}
-            </button>
-        </div>
+        <Router>
+            <Header />
+            <Switch>
+                <Route exact path="/">
+                    <Redirect to="/home" />
+                </Route>
+                <Route path="/home">
+                    <ShowFeed />
+                </Route>
+            </Switch>
+        </Router>
     // <Switch>
     //     <Route history={history} exact path="/home">
     //         <Header

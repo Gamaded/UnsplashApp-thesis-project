@@ -22,6 +22,12 @@ export function getCode () {
     window.location.assign(authUrl);
 }
 
+let accKey = null;
+
+if (localStorage.getItem("accKey")) {
+    accKey = localStorage.getItem("accKey");
+}
+
 export function auth (code) {
     return function setProfile (dispatch) {
         const xhr = new XMLHttpRequest();
@@ -29,12 +35,14 @@ export function auth (code) {
         xhr.send();
         xhr.onload = () => {
             const token = JSON.parse(xhr.response);
-            const accKey = token.access_token;
+            accKey = token.access_token;
+            localStorage.setItem("accKey", accKey);
             xhr.open("GET", "https://api.unsplash.com/me");
             xhr.setRequestHeader("Authorization", `Bearer ${accKey}`);
             xhr.send();
             xhr.onload = () => {
                 const profile = JSON.parse(xhr.response);
+                localStorage.setItem("curUser", JSON.stringify(profile));
                 dispatch(login(profile));
             };
         };
