@@ -1,5 +1,6 @@
 import React from "react";
 import {useSelector} from "react-redux";
+import styled from "styled-components";
 import {getCode} from "../../store/reducers/getDataFromUnsplash.js";
 
 function AuthButton () {
@@ -7,20 +8,27 @@ function AuthButton () {
 
     if (!isAuth) {
         return (
-            <button
-                className="auth"
+            <StAuthButton
                 type="button"
                 onClick={() => {
                     getCode();
                 }}
             >
                 {"Войти"}
-            </button>
+            </StAuthButton>
         );
     }
     if (isAuth) {
         return null;
     }
 }
+
+const StAuthButton = styled.button`
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+`;
 
 export default AuthButton;

@@ -1,30 +1,17 @@
 import React from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {auth} from "../store/reducers/getDataFromUnsplash";
 
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 
-// import {addPhoto, login, getUsersLikes, addPhotosList, like, unlike} from "../store/actions/actions.js";
-
 // import ShowFullscreen from "../components/fullscreen-viewing/ShowFullscreen.jsx";
-import ShowFeed from "../components/photos-feed/ShowFeed.jsx";
+import ShowFeed from "./ShowFeed.jsx";
 import Header from "../components/header/Header.jsx";
 // import Popup from "../components/Popup/Popup.jsx";
-
-const code = window.location.search.split("code=")[1];
 
 // if (localStorage.getItem("bearerToken")) {
 //     unsplash.bearerToken = localStorage.getItem("bearerToken");
 // }
 
 function UnsplashApp () {
-    const isAuth = useSelector(state => state.isAuth);
-
-    const dispatch = useDispatch();
-
-    if (code && !isAuth) {
-        dispatch(auth(code));
-    }
 
     // const {history, appData} = props;
     // const [popup, setPopup] = useState(false);
@@ -60,8 +47,11 @@ function UnsplashApp () {
 
     return (
         <Router>
-            <Header />
+            <Header exact path="/auth" />
             <Switch>
+                <Route exact path="/auth" >
+                    <Redirect to="/home" />
+                </Route>
                 <Route exact path="/">
                     <Redirect to="/home" />
                 </Route>

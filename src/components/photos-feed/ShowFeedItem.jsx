@@ -1,11 +1,11 @@
 import React from "react";
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 
-import Likes from "./Likes";
-import RedirectToFull from "./RedirectToFull";
+// import Likes from "./Likes";
+// import RedirectToFull from "./RedirectToFull";
 
 function ShowFeedItem (props) {
-    const {item, isAuth, addPhoto, usersLikes, like, unlike, unsplash} = props;
+    const {item} = props;
 
     const regexp = /[:T-]/gu;
     const created = item.created_at.split(regexp).splice(0, 3);
@@ -35,22 +35,22 @@ function ShowFeedItem (props) {
                 </div>
                 <div className="date-likes-container">
                     <div className="date">{`${created[2]} ${month[created[1] - 1]} ${created[0]}`}</div>
-                    <Likes
+                    {/* <Likes
                         item={item}
                         isAuth={isAuth}
                         usersLilkes={usersLikes}
                         unsplash={unsplash}
                         like={like}
                         unlike={unlike}
-                    />
+                    /> */}
                 </div>
             </div>
-            <RedirectToFull
+            {/* <RedirectToFull
                 isAuth={isAuth}
                 item={item}
                 addPhoto={addPhoto}
                 Link={Link}
-            />
+            /> */}
         </li>
     );
 }

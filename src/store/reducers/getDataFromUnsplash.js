@@ -3,7 +3,7 @@ import {addPhotosList, login} from "../actions/actions.js";
 
 const clid = {
     "client_secret": "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
-    "redirect_uri": "http://localhost:3000/",
+    "redirect_uri": "http://localhost:3000/auth",
     "client_id": "tislRE5tcfRlNjGf805hJ_vf917iV08JcjtfLWsdQ4w",
     "grant_type": "authorization_code"
 };

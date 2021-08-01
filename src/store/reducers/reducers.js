@@ -7,7 +7,7 @@ const initialState = {
     },
     "usersLikes": [],
     "isAuth": false,
-    "counter": 1
+    "pageToGetPhotos": 1
 };
 
 function appData (state = initialState, action) {
@@ -22,10 +22,8 @@ function appData (state = initialState, action) {
         return state;
 
     case "SET_PHOTOS_LIST":
-        state.counter++;
-        for (let iter = 0; iter < action.photosList.length; iter++) {
-            state.photosList.push(action.photosList[iter]);
-        }
+        state.pageToGetPhotos++;
+        state.photosList = state.photosList.concat(action.photosList);
         return state;
 
     case "GET_USERS_LIKES":
