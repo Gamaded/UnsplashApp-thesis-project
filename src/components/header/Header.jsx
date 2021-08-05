@@ -17,7 +17,6 @@ function Header () {
 
     if (localStorage.getItem("curUser") && !isAuth) {
         const savedUser = JSON.parse(localStorage.getItem("curUser"));
-        console.log(savedUser);
         dispatch(login(savedUser));
     }
 

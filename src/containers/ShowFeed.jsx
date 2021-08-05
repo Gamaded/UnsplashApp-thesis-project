@@ -22,29 +22,46 @@ function ShowFeed () {
         }
     });
 
-    return (
-        <StShowFeedContainer
-            onClick={(event) => {
-                console.log(event.target);
-            }}
-        >
-            <ShowFeedColumnsWrapper
-                photosList={photosList}
-            />
-            <StLoadMoreButton
-                type="button"
-                onClick={() => {
-                    dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+    if (photosList.length === 0) {
+        return (
+            <ShowFeedContainer>
+                <div>
+                    {"Wait Please"}
+                </div>
+            </ShowFeedContainer>
+        );
+    }
+
+    if (photosList !== 0) {
+        return (
+            <ShowFeedContainer
+                onClick={(event) => {
+                    console.log(event.target);
                 }}
             >
-                {"Показать ещё"}
-            </StLoadMoreButton>
-        </StShowFeedContainer>
-    );
+                <ShowFeedColumnsWrapper
+                    photosList={photosList}
+                />
+                <LoadMoreButton
+                    type="button"
+                    onClick={() => {
+                        if (!isAuth) {
+                            dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+                        }
+                        if (isAuth) {
+                            dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
+                        }
+                    }}
+                >
+                    {"Показать ещё"}
+                </LoadMoreButton>
+            </ShowFeedContainer>
+        );
+    }
 }
 
 
-const StShowFeedContainer = styled.main`
+const ShowFeedContainer = styled.main`
     max-width: 1440px;
     margin: 0 auto;
     padding-top: 100px;
@@ -52,7 +69,7 @@ const StShowFeedContainer = styled.main`
     text-align: center;
 `;
 
-const StLoadMoreButton = styled.button`
+const LoadMoreButton = styled.button`
     width: 300px;
     height: 50px;
     margin: 0 auto;

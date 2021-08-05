@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
+import styled from "styled-components";
 import {likePhoto, unlikePhoto} from "../../store/reducers/getDataFromUnsplash";
 
 function Likes (props) {
@@ -7,8 +8,6 @@ function Likes (props) {
     const {item, isAuth} = props;
     const [likesCounter, setLikesCounter] = useState(item.likes);
     const [isLiked, setLiked] = useState(item.liked_by_user);
-
-    console.log(isAuth);
 
     function imgSrc () {
         if (!isLiked) {
@@ -21,28 +20,49 @@ function Likes (props) {
     }
 
     return (
-        <div
-            className="likes"
+        <LikesCont
             onClick={() => {
-                switch (isLiked) {
-                case false:
-                    setLikesCounter(++item.likes);
-                    setLiked(true);
-                    dispatch(likePhoto(item.id));
-                    break;
-                case true:
-                    setLikesCounter(--item.likes);
-                    setLiked(false);
-                    dispatch(unlikePhoto(item.id));
-                    break;
-                default: break;
+                if (isAuth) {
+                    switch (isLiked) {
+                    case false:
+                        setLikesCounter(++item.likes);
+                        setLiked(true);
+                        dispatch(likePhoto(item.id));
+                        break;
+                    case true:
+                        setLikesCounter(--item.likes);
+                        setLiked(false);
+                        dispatch(unlikePhoto(item.id));
+                        break;
+                    default: break;
+                    }
+                }
+                if (!isAuth) {
+                    console.log("авторизуйтесь, блин");
                 }
             }}
         >
-            <img className="heart-filled heart" alt="i have already liked it" src={imgSrc()} />
-            <div className="likes-counter">{likesCounter}</div>
-        </div>
+            <img alt="i have already liked it" src={imgSrc()} />
+            <LikesCounterCont>{likesCounter}</LikesCounterCont>
+        </LikesCont>
     );
 }
+
+const LikesCont = styled.div`
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    margin-left: auto;
+    padding: 5px;
+    background-color: #42424230;
+    border-radius: 5px;
+    color: #ffffff90;
+    cursor: pointer;
+`;
+
+const LikesCounterCont = styled.div`
+    margin-left: 5px;
+    transform: translateY(2px);
+`;
 
 export default Likes;

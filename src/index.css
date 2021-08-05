@@ -26,20 +26,3 @@ a:visited {
 	display: flex;
 	flex-direction: column;
 }
-
-.likes {
-	display: flex;
-	align-self: flex-end;
-	align-items: center;
-	margin-left: auto;
-	padding: 5px;
-	background-color: #42424230;
-	border-radius: 5px;
-	color: #ffffff90;
-	cursor: pointer;
-}
-
-.likes-counter {
-	margin-left: 5px;
-	transform: translateY(2px);
-}

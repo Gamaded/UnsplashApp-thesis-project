@@ -1,15 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import ShowFeedItem from "./ShowFeedItem.jsx";
 
 function ShowFeedColumnsWrapper (props) {
     const {photosList} = props;
     const [numberForAdapt, setNumberForAdapt] = useState(null);
-    const columns = [];
-    for (let iter = 0; iter < numberForAdapt; iter++) {
-        columns[iter] = [];
-    }
-
+    const columns = numberForAdapt ? setColumns() : [];
     function checkWindowWidth () {
         if (window.innerWidth > 1024 && numberForAdapt !== 3) {
             setNumberForAdapt(3);
@@ -21,28 +17,34 @@ function ShowFeedColumnsWrapper (props) {
             setNumberForAdapt(1);
         }
     }
+    if (!numberForAdapt) {
+        checkWindowWidth();
+    }
+
+    console.log(numberForAdapt);
 
     window.onresize = () => {
         checkWindowWidth();
     };
 
-    useEffect(() => {
-        if (!numberForAdapt) {
-            checkWindowWidth();
+    function setColumns () {
+        const primaryColumnsArr = [];
+        for (let iter = 0; iter < numberForAdapt; iter++) {
+            primaryColumnsArr[iter] = [];
         }
-    });
-
-    for (let iter = 0, jter = 0; jter < photosList.length; iter++, jter++) {
-        iter = iter === numberForAdapt ? 0 : iter;
-        columns[iter].push(photosList[jter]);
+        for (let iter = 0, jter = 0; jter < photosList.length; iter++, jter++) {
+            iter = iter === numberForAdapt ? 0 : iter;
+            primaryColumnsArr[iter].push(photosList[jter]);
+        }
+        return primaryColumnsArr;
     }
 
     return (
-        <StColumnsWrapper>
+        <ColumnsWrapper>
             {
                 columns.map(column => {
                     return (
-                        <SrColumn key={columns.indexOf(column)}>
+                        <Column key={columns.indexOf(column)}>
                             {
                                 column.map(item => {
                                     return (
@@ -50,20 +52,20 @@ function ShowFeedColumnsWrapper (props) {
                                     );
                                 })
                             }
-                        </SrColumn>
+                        </Column>
                     );
                 })
             }
-        </StColumnsWrapper>
+        </ColumnsWrapper>
     );
 }
 
-const StColumnsWrapper = styled.div`
+const ColumnsWrapper = styled.div`
     display: flex;
     justify-content: space-between;
 `;
 
-const SrColumn = styled.ul`
+const Column = styled.ul`
     display: flex;
     flex-direction: column;
     align-items: center;

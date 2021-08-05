@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
-// import {Link} from "react-router-dom";
+import RedirectToFull from "./RedirectToFull";
 
 import Likes from "./Likes";
 
 function ShowFeedItem (props) {
     const {item} = props;
     const isAuth = useSelector(state => state.isAuth);
-    console.log(item);
     const regexp = /[:T-]/gu;
     const created = item.created_at.split(regexp).splice(0, 3);
 
@@ -47,12 +46,7 @@ function ShowFeedItem (props) {
                     />
                 </DateLikesCont>
             </ItemProps>
-            {/* <RedirectToFull
-                isAuth={isAuth}
-                item={item}
-                addPhoto={addPhoto}
-                Link={Link}
-            /> */}
+            <RedirectToFull />
         </PhotosFeedItem>
     );
 }

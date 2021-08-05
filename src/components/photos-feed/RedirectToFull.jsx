@@ -1,19 +1,15 @@
 import React from "react";
+import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
 
-function RedirectToFull (props) {
-    const {isAuth, item, addPhoto, Link} = props;
+function RedirectToFull () {
+    const isAuth = useSelector(state => state.isAuth);
 
     if (isAuth) {
         return (
-            <Link to={{
-                "pathname": "/fullscreen"
-            }}
-            >
+            <Link to="/fullscreen">
                 <div
                     className="show-full"
-                    onClick={() => {
-                        addPhoto(item);
-                    }}
                 />
             </Link>
         );

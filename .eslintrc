@@ -4,6 +4,8 @@
   ],
   "extends": ["eslint:all", "plugin:react/all"],
   "rules": {
+    "consistent-return": "off",
+    "no-use-before-define": ["error", { "functions": false, "classes": false }],
     "array-element-newline": "off",
     "linebreak-style": "off",
     "no-ternary": "off",
