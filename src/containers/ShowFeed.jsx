@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
-import {getPhotosFromUnsplash} from "../store/reducers/getDataFromUnsplash.js";
+import {getPhotosFromUnsplash, getPhotosFromUnsplashWithToken} from "../store/reducers/getDataFromUnsplash.js";
 
 import "./ShowFeed.css";
 import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper.jsx";
@@ -10,15 +10,27 @@ function ShowFeed () {
     const dispatch = useDispatch();
     const photosList = useSelector(state => state.photosList);
     const pageToGetPhotos = useSelector(state => state.pageToGetPhotos);
+    const isAuth = useSelector(state => state.isAuth);
     useEffect(() => {
         if (photosList.length === 0 && pageToGetPhotos === 1) {
-            dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+            if (!isAuth) {
+                dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+            }
+            if (isAuth) {
+                dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
+            }
         }
     });
 
     return (
-        <StShowFeedContainer>
-            <ShowFeedColumnsWrapper photosList={photosList} />
+        <StShowFeedContainer
+            onClick={(event) => {
+                console.log(event.target);
+            }}
+        >
+            <ShowFeedColumnsWrapper
+                photosList={photosList}
+            />
             <StLoadMoreButton
                 type="button"
                 onClick={() => {

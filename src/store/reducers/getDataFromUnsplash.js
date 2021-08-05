@@ -1,5 +1,5 @@
 import {createApi} from "unsplash-js";
-import {addPhotosList, login} from "../actions/actions.js";
+import {addPhotosList, login, like, unlike} from "../actions/actions.js";
 
 const clid = {
     "client_secret": "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
@@ -43,9 +43,36 @@ export function auth (code) {
             xhr.onload = () => {
                 const profile = JSON.parse(xhr.response);
                 localStorage.setItem("curUser", JSON.stringify(profile));
+                console.log(profile);
                 dispatch(login(profile));
             };
         };
+    };
+}
+
+export function likePhoto (photoId) {
+    return (dispatch) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `https://api.unsplash.com/photos/${photoId}/like`);
+        xhr.setRequestHeader("Authorization", `Bearer ${accKey}`);
+        xhr.onload = () => {
+            const likedPhoto = JSON.parse(xhr.response).photo;
+            dispatch(like(likedPhoto));
+        };
+        xhr.send();
+    };
+}
+
+export function unlikePhoto (photoId) {
+    return (dispatch) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("DELETE", `https://api.unsplash.com/photos/${photoId}/like`);
+        xhr.setRequestHeader("Authorization", `Bearer ${accKey}`);
+        xhr.onload = () => {
+            const unlikedPhoto = JSON.parse(xhr.response).photo;
+            dispatch(unlike(unlikedPhoto));
+        };
+        xhr.send();
     };
 }
 
@@ -53,8 +80,23 @@ export function getPhotosFromUnsplash (counter) {
     return async function fetchData (dispatch) {
         const resault = await unsplash.photos.list({"page": counter, "perPage": 15})
             .then(res => {
+                console.log(unsplash);
                 return res.response.results;
             });
         dispatch(addPhotosList(resault));
+    };
+}
+
+export function getPhotosFromUnsplashWithToken (counter) {
+    return (dispatch) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `https://api.unsplash.com/photos?page=${counter}&perPage=15`);
+        xhr.setRequestHeader("Authorization", `Bearer ${accKey}`);
+        xhr.onload = () => {
+            const resault = JSON.parse(xhr.response);
+            console.log(resault);
+            dispatch(addPhotosList(resault));
+        };
+        xhr.send();
     };
 }

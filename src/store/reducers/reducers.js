@@ -5,7 +5,7 @@ const initialState = {
         "username": "Гость",
         "profile_image": {"medium": "https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg"}
     },
-    "usersLikes": [],
+    "userLikes": [],
     "isAuth": false,
     "pageToGetPhotos": 1
 };
@@ -26,23 +26,12 @@ function appData (state = initialState, action) {
         state.photosList = state.photosList.concat(action.photosList);
         return state;
 
-    case "GET_USERS_LIKES":
-        state.usersLikes = action.usersLikes;
-        return state;
-
     case "I_LIKE_IT":
-        action.photo.likes += 1;
-        state.usersLikes.push(action.photo);
+        console.log(action.photo);
         return state;
 
     case "I_DONT_LIKE_IT":
-        for (let iter = 0; iter < state.usersLikes.length; iter++) {
-            if (action.photo.id === state.usersLikes[iter].id) {
-                action.photo.likes -= 1;
-                state.usersLikes.splice(iter, 1);
-                break;
-            }
-        }
+        console.log(action.photo);
         return state;
 
     default: return state;

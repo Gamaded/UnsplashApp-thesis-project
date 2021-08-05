@@ -5,9 +5,10 @@ import ShowFeedItem from "./ShowFeedItem.jsx";
 function ShowFeedColumnsWrapper (props) {
     const {photosList} = props;
     const [numberForAdapt, setNumberForAdapt] = useState(null);
-    const columnA = [];
-    const columnB = [];
-    const columnC = [];
+    const columns = [];
+    for (let iter = 0; iter < numberForAdapt; iter++) {
+        columns[iter] = [];
+    }
 
     function checkWindowWidth () {
         if (window.innerWidth > 1024 && numberForAdapt !== 3) {
@@ -21,22 +22,6 @@ function ShowFeedColumnsWrapper (props) {
         }
     }
 
-    for (let iter = 0, jter = 0; jter < photosList.length; iter++, jter++) {
-        iter = iter === numberForAdapt ? 0 : iter;
-        switch (iter) {
-        case 0:
-            columnA.push(photosList[jter]);
-            break;
-        case 1:
-            columnB.push(photosList[jter]);
-            break;
-        case 2:
-            columnC.push(photosList[jter]);
-            break;
-        default: break;
-        }
-    }
-
     window.onresize = () => {
         checkWindowWidth();
     };
@@ -47,35 +32,28 @@ function ShowFeedColumnsWrapper (props) {
         }
     });
 
+    for (let iter = 0, jter = 0; jter < photosList.length; iter++, jter++) {
+        iter = iter === numberForAdapt ? 0 : iter;
+        columns[iter].push(photosList[jter]);
+    }
+
     return (
         <StColumnsWrapper>
-            <ul>
-                {
-                    columnA.map(item => {
-                        return (
-                            <ShowFeedItem item={item} key={item.id} />
-                        );
-                    })
-                }
-            </ul>
-            <ul>
-                {
-                    columnB.map(item => {
-                        return (
-                            <ShowFeedItem item={item} key={item.id} />
-                        );
-                    })
-                }
-            </ul>
-            <ul>
-                {
-                    columnC.map(item => {
-                        return (
-                            <ShowFeedItem item={item} key={item.id} />
-                        );
-                    })
-                }
-            </ul>
+            {
+                columns.map(column => {
+                    return (
+                        <SrColumn key={columns.indexOf(column)}>
+                            {
+                                column.map(item => {
+                                    return (
+                                        <ShowFeedItem item={item} key={item.id} />
+                                    );
+                                })
+                            }
+                        </SrColumn>
+                    );
+                })
+            }
         </StColumnsWrapper>
     );
 }
@@ -83,6 +61,14 @@ function ShowFeedColumnsWrapper (props) {
 const StColumnsWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+`;
+
+const SrColumn = styled.ul`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
 `;
 
 export default ShowFeedColumnsWrapper;

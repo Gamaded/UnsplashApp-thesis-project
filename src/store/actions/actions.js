@@ -19,13 +19,6 @@ export function addPhotosList (photosList) {
     };
 }
 
-export function getUsersLikes (usersLikes) {
-    return {
-        "type": "GET_USERS_LIKES",
-        usersLikes
-    };
-}
-
 export function like (photo) {
     return {
         "type": "I_LIKE_IT",

@@ -27,31 +27,6 @@ a:visited {
 	flex-direction: column;
 }
 
-.author {
-	display: flex;
-	align-self: flex-start;
-}
-
-.author__avatar {
-	width: 64px;
-	height: 64px;
-	object-fit: contain;
-	border-radius: 100%;
-}
-
-.author__name {
-	align-self: center;
-	margin-left: 10px;
-	font-size: 18px;
-	color: #ffffff;
-}
-
-.date-likes-container {
-	display: flex;
-	width: 100%;
-	align-self: flex-end;
-}
-
 .likes {
 	display: flex;
 	align-self: flex-end;
@@ -67,12 +42,4 @@ a:visited {
 .likes-counter {
 	margin-left: 5px;
 	transform: translateY(2px);
-}
-
-.date {
-	align-self: flex-end;
-	padding: 3px;
-	color: #ffffff90;
-	background-color: #42424230;
-	border-radius: 5px;
 }
