@@ -1,105 +1,127 @@
 import React from "react";
+import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
+import {getCurrentPhoto} from "../../store/reducers/getDataFromUnsplash";
+import {ItemDate, DateLikesCont, AuthorCont, AuthorAvatar, AuthorName} from "../commonStyles";
+import PleaseWait from "../commonBlocks/PleaseWait";
+import Likes from "../commonBlocks/Likes";
 
 import "./ShowFullscreen.css";
 
 function ShowFullscreeen () {
+    const dispatch = useDispatch();
+    const isAuth = useSelector(state => state.isAuth);
+    const currentPhoto = useSelector(state => state.currentPhoto);
+    const photoId = window.location.search.split("photoId=")[1];
+    console.log(currentPhoto);
 
-    // const month = {
-    //     "1": "Января",
-    //     "2": "Февраля",
-    //     "3": "Марта",
-    //     "4": "Апреля",
-    //     "5": "Мая",
-    //     "6": "Июня",
-    //     "7": "Июля",
-    //     "8": "Августа",
-    //     "9": "Сентября",
-    //     "10": "Октября",
-    //     "11": "Ноября",
-    //     "12": "Декабря"
-    // };
+    if (!currentPhoto) {
+        dispatch(getCurrentPhoto(photoId));
+        return (
+            <FullScreenCont>
+                <PleaseWait>
+                    {"please Wait"}
+                </PleaseWait>
+            </FullScreenCont>
+        );
+    }
 
-    // const regexp = /[:T-]/gu;
-    // const created = currentPhoto.created_at.split(regexp).splice(0, 3);
+    const month = {
+        "01": "Января",
+        "02": "Февраля",
+        "03": "Марта",
+        "04": "Апреля",
+        "05": "Мая",
+        "06": "Июня",
+        "07": "Июля",
+        "08": "Августа",
+        "09": "Сентября",
+        "10": "Октября",
+        "11": "Ноября",
+        "12": "Декабря"
+    };
 
-    // function Like () {
-    //     const [likes, setLikes] = useState(currentPhoto.likes);
-
-    //     for (let iter = 0; iter < usersLikes.length; iter++) {
-    //         if (currentPhoto.id === usersLikes[iter].id) {
-    //             return (
-    //                 <div
-    //                     className="fullscreen-viewing__likes likes"
-    //                     onClick={() => {
-    //                         unsplash.photos.unlikePhoto(currentPhoto.id)
-    //                             .then(res => res.json())
-    //                             .then(json => {
-    //                                 unlike(currentPhoto);
-    //                                 setLikes(likes - 1);
-    //                                 console.log(json);
-    //                             });
-    //                     }}
-    //                 >
-    //                     <img className="heart-filled heart-hided" alt="i have already liked it" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAABvElEQVQ4jc3PP2hTURTH8e+5yUt8vhZtBxFBJUqxmM10qa1DBhfB1UUsFKQRwcVNUMzQuUMVadxd3ESdBAkodLDRQSu2FASraXFIppg/789xaBL02eefJIO/5d13zj0f7oH/PRIuZAorFgwfj2vct7c/fSzms164H5ORlK+eGd4qb4T7XXByYdN2nWYe1Tlgf7tcUSggzjyACWq3VJgDRtvDVeC+k4zni7OpRhecXNi03b2NZ8DU7mvICyUQkOndF9WXQ0nrbHE21TAArtPMR2EAip6JxgBkutbwbgNIprBiie77+sOaPUWg6mx/PmDEHzrWLwagMFI/eCRlYsYK+sU68SQIjCf2F8AfhJeo7SmbUu7QN9DiAMDny9cP183OWe70qwncbX93MrG0/hTkXC+YwpPSlbHzAKZTtOLuJWC9h7ettYLETOevCy5fTld8188qvP8H7Z1KK/v26tHqLyDAm2vjZcScBh7/BfYo1mKqlDu59dN7o25PLG3MgN4DnFCrLuiNV7mxRUQ0PBcJAmQKa+Oi5gFwql16rRJcLOVOfIia+S0IkH64mrAryXmA+mjz5uqFdOtPMwPNd/Isj5aD4sfMAAAAAElFTkSuQmCC" />
-    //                     <div className="likes-counter">{likes}</div>
-    //                 </div>
-    //             );
-    //         } else if (iter === usersLikes.length - 1) {
-    //             return (
-    //                 <div
-    //                     className="fullscreen-viewing__likes likes"
-    //                     onClick={() => {
-    //                         unsplash.photos.likePhoto(currentPhoto.id)
-    //                             .then(res => res.json())
-    //                             .then(json => {
-    //                                 like(currentPhoto);
-    //                                 setLikes(likes + 1);
-    //                                 console.log(json);
-    //                             });
-    //                     }}
-    //                 >
-    //                     <img className="heart-empty heart-shown" alt="i like it!" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABmJLR0QA/wD/AP+gvaeTAAABWElEQVQ4jc2UsUpcURRF13kzI5pCMJV2OpIEQb9B0liIGMgHiJ2MGIhYpbOL2vkBIlgLwcLCQmsViV0UtJCkC6SLYGGybK5ymYxRnxYeOM3e+6x77oX34LlXNAtqDegHLoGziLhs8qtAL1AFTpv9yIIdwDwwAnxLA6+ADWAhxT4B48AJ8AcYALaA+Yi4yE/tUHfUKbXI9Ir6Qd1MPaNWMr9QG+q22p4DF9Wp295FnVan/+M31M83b6Ye5ps9tNKmh2q1AOrAUUT8LQtMs8dAvQAqQK0sLKsaUBTAd6DvCYB9wI8iIn4Dv9TXZUnqG+BnRJxfC2PqyiOAq+pos/hFfVcC9l5db2W8VL+qww+AvU0zXbcFetQDdeIesMmU7b4r2Jmuv6a+aOG3q8vpU2y9WYuhQp1T99TBTB9S99VZ9Z8/1X3Ag+qu+jH1bn5AqVLb1KXUbY+Clakrp7kYeRvuWdYAAAAASUVORK5CYII=" />
-    //                     <div className="likes-counter">{likes}</div>
-    //                 </div>
-    //             );
-    //         }
-    //     }
-    // }
+    const regexp = /[:T-]/gu;
+    const created = currentPhoto.created_at.split(regexp).splice(0, 3);
+    console.log(created);
 
     return (
         <FullScreenCont>
-            {"fullscreen"}
-            {/* <header className="fullscreen-viewing__header">
-                <button
-                    className="back-arrow"
+            <FullScreenHeader>
+                <FullScreenBackArrow
                     type="button"
                     onClick={() => {
                         history.goBack();
                     }}
                 />
-                <div className="fullscreen-viewing__author author">
-                    <img className="author__avatar" alt="author's avatar" src={currentPhoto.user.profile_image.medium} />
-                    <div className="author__name">
+                <AuthorCont>
+                    <AuthorAvatar alt="author's avatar" src={currentPhoto.user.profile_image.medium} />
+                    <AuthorName>
                         <a href={currentPhoto.user.links.html} target="_blank" rel="noopener noreferrer">{currentPhoto.user.username}</a>
-                    </div>
-                </div>
-            </header>
-            <div className="fullscreen-viewing__content">
-                <img className="fullscreen-viewing__photo" alt={currentPhoto.alt_description} src={currentPhoto.urls.full} />
-                <div className="fullscreen-viewing__footer">
-                    <div className="date-likes-container">
-                        <div className="date">{`${created[2]} ${month[created[1]]} ${created[0]}`}</div>
-                        <Like />
-                    </div>
-                </div>
-            </div> */}
+                    </AuthorName>
+                </AuthorCont>
+            </FullScreenHeader>
+            <FullScreenContent>
+                <FullScreenPhoto alt={currentPhoto.alt_description} src={currentPhoto.urls.full} />
+                <FullScreenFooter>
+                    <DateLikesCont>
+                        <ItemDate>{`${created[2]} ${month[created[1]]} ${created[0]}`}</ItemDate>
+                        <Likes item={currentPhoto} isAuth={isAuth} />
+                    </DateLikesCont>
+                </FullScreenFooter>
+            </FullScreenContent>
         </FullScreenCont>
     );
 }
 
 const FullScreenCont = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 100%;
+    height: 100vh;
     padding-top: 90px;
+    background-color: #000000e0;
+`;
+
+
+const FullScreenHeader = styled.header`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+`;
+
+const FullScreenBackArrow = styled.button`
+    width: 51px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAeCAYAAACBkybCAAABN2lDQ1BBZG9iZSBSR0IgKDE5OTgpAAAokZWPv0rDUBSHvxtFxaFWCOLgcCdRUGzVwYxJW4ogWKtDkq1JQ5ViEm6uf/oQjm4dXNx9AidHwUHxCXwDxamDQ4QMBYvf9J3fORzOAaNi152GUYbzWKt205Gu58vZF2aYAoBOmKV2q3UAECdxxBjf7wiA10277jTG+38yH6ZKAyNguxtlIYgK0L/SqQYxBMygn2oQD4CpTto1EE9AqZf7G1AKcv8ASsr1fBBfgNlzPR+MOcAMcl8BTB1da4Bakg7UWe9Uy6plWdLuJkEkjweZjs4zuR+HiUoT1dFRF8jvA2AxH2w3HblWtay99X/+PRHX82Vun0cIQCw9F1lBeKEuf1UYO5PrYsdwGQ7vYXpUZLs3cLcBC7dFtlqF8hY8Dn8AwMZP/fNTP8gAAAAJcEhZcwAACxMAAAsTAQCanBgAAAXraVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0NSA3OS4xNjM0OTksIDIwMTgvMDgvMTMtMTY6NDA6MjIgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChXaW5kb3dzKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjAtMDgtMjdUMDk6NTQ6NTkrMDU6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDIwLTA4LTI3VDEwOjA0OjMwKzA1OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDIwLTA4LTI3VDEwOjA0OjMwKzA1OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgcGhvdG9zaG9wOklDQ1Byb2ZpbGU9IkFkb2JlIFJHQiAoMTk5OCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NWMzM2QyZGUtYzA4Ny1hMDQ4LWIxYTYtMDcwZmU2NzU3NGU3IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjdjM2FjZDA3LTRlNzMtYmI0Mi1hYmJhLTY2NjQ0YjA5ZGRlYSIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJ4bXAuZGlkOjdjM2FjZDA3LTRlNzMtYmI0Mi1hYmJhLTY2NjQ0YjA5ZGRlYSI+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNyZWF0ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6N2MzYWNkMDctNGU3My1iYjQyLWFiYmEtNjY2NDRiMDlkZGVhIiBzdEV2dDp3aGVuPSIyMDIwLTA4LTI3VDA5OjU0OjU5KzA1OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOSAoV2luZG93cykiLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjVjMzNkMmRlLWMwODctYTA0OC1iMWE2LTA3MGZlNjc1NzRlNyIgc3RFdnQ6d2hlbj0iMjAyMC0wOC0yN1QxMDowNDozMCswNTowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsyDZAcAAADGSURBVFiF3dZBDsIwDETRb8T9rxxWiMo0iZOwmGE27aaSX1vHjtYa/5LHwbNyb2EX09JVIjuYDJABrWJ6hUuAVjCjguO0kF+kipGHQA1jAYE5xgYCY4wVBPoYOwjcYywh8I2xhQA8L/ezwScxGDsJ+HwZ5ULLOdma5fLGyPdDJdeeCcwPgPybjQqW76u7nrEF9Q4AS9DoNLMDzY5mK1BlztiAqkPTArSyAciDVteZHkhioO7sZrlwCQjsL5qRrhI52ZqlIAAvSrcePWi2F7AAAAAASUVORK5CYII=);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    cursor: pointer;
+`;
+
+const FullScreenContent = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 10px;
+    background-color: #1f1f1f;
+`;
+
+const FullScreenPhoto = styled.img`
+    width: 100%;
+    object-fit: contain;
+`;
+
+const FullScreenFooter = styled.footer`
+    width: 100%;
+    margin-top: 15px;
 `;
 
 export default ShowFullscreeen;

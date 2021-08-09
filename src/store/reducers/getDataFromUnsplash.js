@@ -1,5 +1,5 @@
 import {createApi} from "unsplash-js";
-import {addPhotosList, login, like, unlike} from "../actions/actions.js";
+import {addPhotosList, login, like, unlike, addPhoto} from "../actions/actions.js";
 
 const clid = {
     "client_secret": "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
@@ -95,6 +95,19 @@ export function getPhotosFromUnsplashWithToken (counter) {
         xhr.onload = () => {
             const resault = JSON.parse(xhr.response);
             dispatch(addPhotosList(resault));
+        };
+        xhr.send();
+    };
+}
+
+export function getCurrentPhoto (photoId) {
+    return (dispatch) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `https://api.unsplash.com/photos/${photoId}`);
+        xhr.setRequestHeader("Authorization", `Bearer ${accKey}`);
+        xhr.onload = () => {
+            const resault = JSON.parse(xhr.response);
+            dispatch(addPhoto(resault));
         };
         xhr.send();
     };

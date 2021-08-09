@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
 import RedirectToFull from "./RedirectToFull";
+import {ItemDate, DateLikesCont, AuthorCont, AuthorAvatar, AuthorName} from "../commonStyles";
 
-import Likes from "./Likes";
+import Likes from "../commonBlocks/Likes";
 
 function ShowFeedItem (props) {
     const {item} = props;
@@ -46,7 +47,7 @@ function ShowFeedItem (props) {
                     />
                 </DateLikesCont>
             </ItemProps>
-            <RedirectToFull />
+            <RedirectToFull item={item} />
         </PhotosFeedItem>
     );
 }
@@ -73,39 +74,6 @@ const ItemProps = styled.div`
     width: 100%;
     height: 100%;
     padding: 10px;
-`;
-
-const AuthorCont = styled.div`
-    display: flex;
-    align-self: flex-start;
-`;
-
-const AuthorAvatar = styled.img`
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    border-radius: 100%;
-`;
-
-const AuthorName = styled.div`
-    align-self: center;
-    margin-left: 10px;
-    font-size: 18px;
-    color: #ffffff;
-`;
-
-const DateLikesCont = styled.div`
-    display: flex;
-    width: 100%;
-    align-self: flex-end;
-`;
-
-const ItemDate = styled.div`
-    align-self: flex-end;
-    padding: 3px;
-    color: #ffffff90;
-    background-color: #42424230;
-    border-radius: 5px;
 `;
 
 export default ShowFeedItem;

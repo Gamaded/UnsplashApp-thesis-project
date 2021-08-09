@@ -1,6 +1,6 @@
 const initialState = {
     "photosList": [],
-    "currentPhoto": {},
+    "currentPhoto": null,
     "user": {
         "username": "Гость",
         "profile_image": {"medium": "https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg"}
@@ -27,11 +27,9 @@ function appData (state = initialState, action) {
         return state;
 
     case "I_LIKE_IT":
-        console.log(action.photo);
         return state;
 
     case "I_DONT_LIKE_IT":
-        console.log(action.photo);
         return state;
 
     default: return state;

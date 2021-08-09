@@ -27,11 +27,13 @@ function Likes (props) {
                     case false:
                         setLikesCounter(++item.likes);
                         setLiked(true);
+                        item.liked_by_user = true;
                         dispatch(likePhoto(item.id));
                         break;
                     case true:
                         setLikesCounter(--item.likes);
                         setLiked(false);
+                        item.liked_by_user = false;
                         dispatch(unlikePhoto(item.id));
                         break;
                     default: break;

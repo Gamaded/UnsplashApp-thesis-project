@@ -21,8 +21,6 @@ function ShowFeedColumnsWrapper (props) {
         checkWindowWidth();
     }
 
-    console.log(numberForAdapt);
-
     window.onresize = () => {
         checkWindowWidth();
     };
