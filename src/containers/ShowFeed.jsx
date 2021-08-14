@@ -2,9 +2,8 @@ import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
 import {getPhotosFromUnsplash, getPhotosFromUnsplashWithToken} from "../store/reducers/getDataFromUnsplash.js";
-
-import "./ShowFeed.css";
 import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper.jsx";
+import PleaseWait from "../components/commonBlocks/PleaseWait";
 
 function ShowFeed () {
     const dispatch = useDispatch();
@@ -25,9 +24,7 @@ function ShowFeed () {
     if (photosList.length === 0) {
         return (
             <ShowFeedContainer>
-                <div>
-                    {"Wait Please"}
-                </div>
+                <PleaseWait background="light" />
             </ShowFeedContainer>
         );
     }

@@ -44,7 +44,7 @@
     "arrow-parens": "off",
     "padded-blocks": "off",
     "no-console": "off",
-    "func-style": ["error", "declaration"],
+    "func-style": "off",
     "react/jsx-curly-brace-presence": ["error", { "props": "never", "children": "always" }]
   }
 }
