@@ -1,20 +1,20 @@
 import React from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
-// import {getCurrentPhoto} from "../../store/reducers/getDataFromUnsplash";
+import {getCurrentPhoto} from "../../store/reducers/getDataFromUnsplash";
 import {ItemDate, DateLikesCont, AuthorCont, AuthorAvatar, AuthorName} from "../commonStyles";
 import PleaseWait from "../commonBlocks/PleaseWait";
 import Likes from "../commonBlocks/Likes";
 
 function ShowFullscreeen () {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const isAuth = useSelector(state => state.isAuth);
     const currentPhoto = useSelector(state => state.currentPhoto);
-    // const photoId = window.location.search.split("photoId=")[1];
+    const photoId = window.location.search.split("photoId=")[1];
     console.log(currentPhoto);
 
     if (!currentPhoto) {
-        // dispatch("getCurrentPhoto(photoId)");
+        dispatch(getCurrentPhoto(photoId));
         return (
             <FullScreenCont>
                 <PleaseWait background="dark" />
