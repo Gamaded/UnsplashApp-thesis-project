@@ -29,7 +29,7 @@ function ShowFeedItem (props) {
 
     return (
         <PhotosFeedItem>
-            <ItemPhoto alt={item.alt_description} src={item.urls.regular} />
+            <ItemPhoto alt={item.alt_description} src={item.urls.small} />
             <ItemProps>
                 <AuthorCont>
                     <AuthorAvatar alt="author's avatar" src={item.user.profile_image.medium} />
@@ -55,12 +55,13 @@ function ShowFeedItem (props) {
 const PhotosFeedItem = styled.li`
     position: relative;
     z-index: 1;
-    max-width: 530px;
+    width: 100%;
     margin-bottom: 10px;
 `;
 
 const ItemPhoto = styled.img`
-    max-width: 100%;
+    width: 100%;
+    min-height: 200px;
     -o-object-fit: contain;
     object-fit: contain;
 `;

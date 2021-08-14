@@ -78,7 +78,7 @@ export function unlikePhoto (photoId) {
 
 export function getPhotosFromUnsplash (counter) {
     return async function fetchData (dispatch) {
-        const resault = await unsplash.photos.list({"page": counter, "perPage": 15})
+        const resault = await unsplash.photos.list({"page": counter, "perPage": 24})
             .then(res => {
                 console.log(unsplash);
                 return res.response.results;
@@ -90,7 +90,7 @@ export function getPhotosFromUnsplash (counter) {
 export function getPhotosFromUnsplashWithToken (counter) {
     return (dispatch) => {
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", `https://api.unsplash.com/photos?page=${counter}&per_page=15`);
+        xhr.open("GET", `https://api.unsplash.com/photos?page=${counter}&per_page=24`);
         xhr.setRequestHeader("Authorization", `Bearer ${accKey}`);
         xhr.onload = () => {
             const resault = JSON.parse(xhr.response);

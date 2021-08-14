@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
 import {getPhotosFromUnsplash, getPhotosFromUnsplashWithToken} from "../store/reducers/getDataFromUnsplash.js";
@@ -10,6 +10,26 @@ function ShowFeed () {
     const photosList = useSelector(state => state.photosList);
     const pageToGetPhotos = useSelector(state => state.pageToGetPhotos);
     const isAuth = useSelector(state => state.isAuth);
+    const [clientHeight, setClientHeight] = useState(document.body.clientHeight);
+
+    function loadMorePhotos () {
+        if (window.pageYOffset > clientHeight / 2 && clientHeight > 320) {
+            if (!isAuth) {
+                dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+            }
+            if (isAuth) {
+                dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
+            }
+            setClientHeight(document.body.clientHeight);
+        }
+    }
+
+    console.log(document.body.clientHeight);
+
+    window.onscroll = () => {
+        loadMorePhotos();
+    };
+
     useEffect(() => {
         if (photosList.length === 0 && pageToGetPhotos === 1) {
             if (!isAuth) {
@@ -60,6 +80,7 @@ function ShowFeed () {
 
 const ShowFeedContainer = styled.main`
     max-width: 1440px;
+    min-width: 320px;
     margin: 0 auto;
     padding-top: 100px;
     padding-bottom: 50px;
