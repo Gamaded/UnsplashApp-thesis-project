@@ -43,7 +43,6 @@ export function auth (code) {
             xhr.onload = () => {
                 const profile = JSON.parse(xhr.response);
                 localStorage.setItem("curUser", JSON.stringify(profile));
-                console.log(profile);
                 dispatch(login(profile));
             };
         };
@@ -80,7 +79,6 @@ export function getPhotosFromUnsplash (counter) {
     return async function fetchData (dispatch) {
         const resault = await unsplash.photos.list({"page": counter, "perPage": 24})
             .then(res => {
-                console.log(unsplash);
                 return res.response.results;
             });
         dispatch(addPhotosList(resault));

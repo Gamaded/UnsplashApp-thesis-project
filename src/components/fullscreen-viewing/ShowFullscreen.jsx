@@ -2,16 +2,16 @@ import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
 import {getCurrentPhoto} from "../../store/reducers/getDataFromUnsplash";
-import {ItemDate, DateLikesCont, AuthorCont, AuthorAvatar, AuthorName} from "../commonStyles";
-import PleaseWait from "../commonBlocks/PleaseWait";
-import Likes from "../commonBlocks/Likes";
+import {DateLikesCont} from "../commonStyles";
+import {AuthorCont, Likes, PleaseWait, ItemDate} from "../../elements";
+import {useHistory} from "react-router";
 
 function ShowFullscreeen () {
     const dispatch = useDispatch();
+    const history = useHistory();
     const isAuth = useSelector(state => state.isAuth);
     const currentPhoto = useSelector(state => state.currentPhoto);
     const photoId = window.location.search.split("photoId=")[1];
-    console.log(currentPhoto);
 
     if (!currentPhoto) {
         dispatch(getCurrentPhoto(photoId));
@@ -22,25 +22,6 @@ function ShowFullscreeen () {
         );
     }
 
-    const month = {
-        "01": "Января",
-        "02": "Февраля",
-        "03": "Марта",
-        "04": "Апреля",
-        "05": "Мая",
-        "06": "Июня",
-        "07": "Июля",
-        "08": "Августа",
-        "09": "Сентября",
-        "10": "Октября",
-        "11": "Ноября",
-        "12": "Декабря"
-    };
-
-    const regexp = /[:T-]/gu;
-    const created = currentPhoto.created_at.split(regexp).splice(0, 3);
-    console.log(created);
-
     return (
         <FullScreenCont>
             <FullScreenHeader>
@@ -50,18 +31,13 @@ function ShowFullscreeen () {
                         history.goBack();
                     }}
                 />
-                <AuthorCont>
-                    <AuthorAvatar alt="author's avatar" src={currentPhoto.user.profile_image.medium} />
-                    <AuthorName>
-                        <a href={currentPhoto.user.links.html} target="_blank" rel="noopener noreferrer">{currentPhoto.user.username}</a>
-                    </AuthorName>
-                </AuthorCont>
+                <AuthorCont item={currentPhoto} />
             </FullScreenHeader>
             <FullScreenContent>
                 <FullScreenPhoto alt={currentPhoto.alt_description} src={currentPhoto.urls.full} />
                 <FullScreenFooter>
                     <DateLikesCont>
-                        <ItemDate>{`${created[2]} ${month[created[1]]} ${created[0]}`}</ItemDate>
+                        <ItemDate item={currentPhoto} />
                         <Likes item={currentPhoto} isAuth={isAuth} />
                     </DateLikesCont>
                 </FullScreenFooter>

@@ -6,21 +6,18 @@ import {getCode} from "../../store/reducers/getDataFromUnsplash.js";
 function AuthButton () {
     const isAuth = useSelector(state => state.isAuth);
 
-    if (!isAuth) {
-        return (
-            <StAuthButton
-                type="button"
-                onClick={() => {
-                    getCode();
-                }}
-            >
-                {"Войти"}
-            </StAuthButton>
-        );
-    }
-    if (isAuth) {
-        return null;
-    }
+    if (isAuth) return null;
+
+    return (
+        <StAuthButton
+            type="button"
+            onClick={() => {
+                getCode();
+            }}
+        >
+            {"Войти"}
+        </StAuthButton>
+    );
 }
 
 const StAuthButton = styled.button`

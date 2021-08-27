@@ -4,31 +4,29 @@ import {addPhoto} from "../../store/actions/actions";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 
-function RedirectToFull (props) {
+function RedirectToFull ({item}) {
     const dispatch = useDispatch();
-    const {item} = props;
     const isAuth = useSelector(state => state.isAuth);
 
-    if (isAuth) {
-        return (
-            <Link to={{
-                "pathname": "/fullscreen",
-                "search": `?photoId=${item.id}`
-            }}
-            >
-                <ShowFull
-                    onClick={() => {
-                        dispatch(addPhoto(item));
-                    }}
-                />
-            </Link>
-        );
-    }
     if (!isAuth) {
         return (
             <ShowFull />
         );
     }
+
+    return (
+        <Link to={{
+            "pathname": "/fullscreen",
+            "search": `?photoId=${item.id}`
+        }}
+        >
+            <ShowFull
+                onClick={() => {
+                    dispatch(addPhoto(item));
+                }}
+            />
+        </Link>
+    );
 }
 
 const ShowFull = styled.div`

@@ -1,8 +1,7 @@
 import React from "react";
 import styled, {keyframes} from "styled-components";
 
-function PleaseWait (props) {
-    const {background} = props;
+function PleaseWait ({background}) {
     const theme = {
         "light": {
             "primary": "#424242",

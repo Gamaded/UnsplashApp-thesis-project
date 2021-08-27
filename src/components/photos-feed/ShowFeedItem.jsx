@@ -2,51 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
 import RedirectToFull from "./RedirectToFull";
-import {ItemDate, DateLikesCont, AuthorCont, AuthorAvatar, AuthorName} from "../commonStyles";
+import {DateLikesCont} from "../commonStyles";
+import {ItemDate, Likes, AuthorCont} from "../../elements";
 
-import Likes from "../commonBlocks/Likes";
-
-function ShowFeedItem (props) {
-    const {item} = props;
+function ShowFeedItem ({item}) {
     const isAuth = useSelector(state => state.isAuth);
-    const regexp = /[:T-]/gu;
-    const created = item.created_at.split(regexp).splice(0, 3);
-
-    console.log(item);
-
-    const month = [
-        "Января",
-        "Февраля",
-        "Марта",
-        "Апреля",
-        "Мая",
-        "Июня",
-        "Июля",
-        "Августа",
-        "Сентября",
-        "Октября",
-        "Ноября",
-        "Декабря"
-    ];
 
     return (
         <PhotosFeedItem>
             <ItemPhoto alt={item.alt_description} src={item.urls.small} />
             <ItemProps>
-                <AuthorCont>
-                    <AuthorAvatar alt="author's avatar" src={item.user.profile_image.medium} />
-                    <AuthorName>
-                        <a href={item.user.links.html} target="_blank" rel="noopener noreferrer">{item.user.username}</a>
-                    </AuthorName>
-                </AuthorCont>
+                <AuthorCont item={item} />
                 <DateLikesCont>
-                    <ItemDate>
-                        {`${created[2]} ${month[created[1] - 1]} ${created[0]}`}
-                    </ItemDate>
-                    <Likes
-                        item={item}
-                        isAuth={isAuth}
-                    />
+                    <ItemDate item={item} />
+                    <Likes item={item} isAuth={isAuth} />
                 </DateLikesCont>
             </ItemProps>
             <RedirectToFull item={item} />

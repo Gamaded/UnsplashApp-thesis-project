@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
 import {getPhotosFromUnsplash, getPhotosFromUnsplashWithToken} from "../store/reducers/getDataFromUnsplash.js";
 import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper.jsx";
-import PleaseWait from "../components/commonBlocks/PleaseWait";
+import PleaseWait from "../elements/PleaseWait";
 
 function ShowFeed () {
     const dispatch = useDispatch();
@@ -34,10 +34,9 @@ function ShowFeed () {
         if (photosList.length === 0 && pageToGetPhotos === 1) {
             if (!isAuth) {
                 dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+                return;
             }
-            if (isAuth) {
-                dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
-            }
+            dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
         }
     });
 
@@ -49,27 +48,25 @@ function ShowFeed () {
         );
     }
 
-    if (photosList !== 0) {
-        return (
-            <ShowFeedContainer
-                onClick={(event) => {
-                    console.log(event.target);
+    return (
+        <ShowFeedContainer
+            onClick={(event) => {
+                console.log(event.target);
+            }}
+        >
+            <ShowFeedColumnsWrapper
+                photosList={photosList}
+            />
+            <LoadMoreButton
+                type="button"
+                onClick={() => {
+                    return isAuth ? dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos)) : dispatch(getPhotosFromUnsplash(pageToGetPhotos));
                 }}
             >
-                <ShowFeedColumnsWrapper
-                    photosList={photosList}
-                />
-                <LoadMoreButton
-                    type="button"
-                    onClick={() => {
-                        return isAuth ? dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos)) : dispatch(getPhotosFromUnsplash(pageToGetPhotos));
-                    }}
-                >
-                    {"Показать ещё"}
-                </LoadMoreButton>
-            </ShowFeedContainer>
-        );
-    }
+                {"Показать ещё"}
+            </LoadMoreButton>
+        </ShowFeedContainer>
+    );
 }
 
 const ShowFeedContainer = styled.main`

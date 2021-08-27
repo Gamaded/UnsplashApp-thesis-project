@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import "./Popup.css";
 
-function Popup (props) {
-    const {popup} = props;
-
+function Popup ({popup}) {
     return popup ? <PopupBlock>{"Необходимо авторизоваться"}</PopupBlock> : null;
 }
 

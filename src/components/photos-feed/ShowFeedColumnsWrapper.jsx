@@ -2,8 +2,7 @@ import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import ShowFeedItem from "./ShowFeedItem.jsx";
 
-function ShowFeedColumnsWrapper (props) {
-    const {photosList} = props;
+function ShowFeedColumnsWrapper ({photosList}) {
     const [numberForAdapt, setNumberForAdapt] = useState(null);
     const columns = numberForAdapt ? setColumns() : [];
     function checkWindowWidth () {
@@ -35,14 +34,11 @@ function ShowFeedColumnsWrapper (props) {
     }
 
     useEffect(() => {
-        if (!numberForAdapt) {
-            checkWindowWidth();
-        }
-        console.log(document.getElementById("jopa").clientHeight);
+        if (!numberForAdapt) checkWindowWidth();
     });
 
     return (
-        <ColumnsWrapper id="jopa">
+        <ColumnsWrapper id="columns-wrapper">
             {
                 columns.map(column => {
                     return (
