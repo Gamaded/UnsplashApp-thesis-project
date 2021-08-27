@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
 import {getPhotosFromUnsplash, getPhotosFromUnsplashWithToken} from "../store/reducers/getDataFromUnsplash.js";
@@ -10,25 +10,25 @@ function ShowFeed () {
     const photosList = useSelector(state => state.photosList);
     const pageToGetPhotos = useSelector(state => state.pageToGetPhotos);
     const isAuth = useSelector(state => state.isAuth);
-    const [clientHeight, setClientHeight] = useState(document.body.clientHeight);
 
-    function loadMorePhotos () {
-        if (window.pageYOffset > clientHeight / 2 && clientHeight > 320) {
-            if (!isAuth) {
-                dispatch(getPhotosFromUnsplash(pageToGetPhotos));
-            }
-            if (isAuth) {
-                dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
-            }
-            setClientHeight(document.body.clientHeight);
-        }
-    }
+    // function loadMorePhotos () {
+    //     console.log(clientHieght);
+    //     if (window.pageYOffset > document.body.clientHeight / 2 && document.body.clientHeight > 320) {
+    //         console.log(window.pageYOffset);
+    //         // if (!isAuth) {
+    //         //     dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+    //         // }
+    //         // if (isAuth) {
+    //         //     dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
+    //         // }
+    //     }
+    // }
 
-    console.log(document.body.clientHeight);
-
-    window.onscroll = () => {
-        loadMorePhotos();
-    };
+    // window.onscroll = () => {
+    //     if (window.pageYOffset % 300 === 0) {
+    //         loadMorePhotos();
+    //     }
+    // };
 
     useEffect(() => {
         if (photosList.length === 0 && pageToGetPhotos === 1) {
@@ -62,12 +62,7 @@ function ShowFeed () {
                 <LoadMoreButton
                     type="button"
                     onClick={() => {
-                        if (!isAuth) {
-                            dispatch(getPhotosFromUnsplash(pageToGetPhotos));
-                        }
-                        if (isAuth) {
-                            dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
-                        }
+                        return isAuth ? dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos)) : dispatch(getPhotosFromUnsplash(pageToGetPhotos));
                     }}
                 >
                     {"Показать ещё"}
@@ -76,7 +71,6 @@ function ShowFeed () {
         );
     }
 }
-
 
 const ShowFeedContainer = styled.main`
     max-width: 1440px;

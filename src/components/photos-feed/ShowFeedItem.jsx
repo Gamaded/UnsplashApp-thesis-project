@@ -12,6 +12,8 @@ function ShowFeedItem (props) {
     const regexp = /[:T-]/gu;
     const created = item.created_at.split(regexp).splice(0, 3);
 
+    console.log(item);
+
     const month = [
         "Января",
         "Февраля",
@@ -61,9 +63,10 @@ const PhotosFeedItem = styled.li`
 
 const ItemPhoto = styled.img`
     width: 100%;
+    max-height: 400px;
     min-height: 200px;
-    -o-object-fit: contain;
-    object-fit: contain;
+    -o-object-fit: cover;
+    object-fit: cover;
 `;
 
 const ItemProps = styled.div`

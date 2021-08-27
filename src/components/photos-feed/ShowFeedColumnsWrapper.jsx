@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import ShowFeedItem from "./ShowFeedItem.jsx";
 
@@ -17,9 +17,6 @@ function ShowFeedColumnsWrapper (props) {
             setNumberForAdapt(1);
         }
     }
-    if (!numberForAdapt) {
-        checkWindowWidth();
-    }
 
     window.onresize = () => {
         checkWindowWidth();
@@ -37,8 +34,15 @@ function ShowFeedColumnsWrapper (props) {
         return primaryColumnsArr;
     }
 
+    useEffect(() => {
+        if (!numberForAdapt) {
+            checkWindowWidth();
+        }
+        console.log(document.getElementById("jopa").clientHeight);
+    });
+
     return (
-        <ColumnsWrapper>
+        <ColumnsWrapper id="jopa">
             {
                 columns.map(column => {
                     return (
@@ -61,6 +65,7 @@ function ShowFeedColumnsWrapper (props) {
 const ColumnsWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
 `;
 
 const Column = styled.ul`
