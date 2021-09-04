@@ -5,9 +5,15 @@ export function addPhoto (photo) {
     };
 }
 
-export function login (user) {
+export function setAuth () {
     return {
-        "type": "AUTH",
+        "type": "AUTH"
+    };
+}
+
+export function setProfile (user) {
+    return {
+        "type": "SET_PROFILE",
         user
     };
 }

@@ -2,6 +2,7 @@ const initialState = {
     "photosList": [],
     "currentPhoto": null,
     "user": {
+        "unauth": true,
         "username": "Гость",
         "profile_image": {"medium": "https://www.meme-arsenal.com/memes/5eae5104f379baa355e031fa1ded886c.jpg"}
     },
@@ -17,8 +18,11 @@ function appData (state = initialState, action) {
         return state;
 
     case "AUTH":
-        state.user = action.user;
         state.isAuth = true;
+        return state;
+
+    case "SET_PROFILE":
+        state.user = action.user;
         return state;
 
     case "SET_PHOTOS_LIST":

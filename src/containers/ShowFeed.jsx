@@ -11,25 +11,6 @@ function ShowFeed () {
     const pageToGetPhotos = useSelector(state => state.pageToGetPhotos);
     const isAuth = useSelector(state => state.isAuth);
 
-    // function loadMorePhotos () {
-    //     console.log(clientHieght);
-    //     if (window.pageYOffset > document.body.clientHeight / 2 && document.body.clientHeight > 320) {
-    //         console.log(window.pageYOffset);
-    //         // if (!isAuth) {
-    //         //     dispatch(getPhotosFromUnsplash(pageToGetPhotos));
-    //         // }
-    //         // if (isAuth) {
-    //         //     dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
-    //         // }
-    //     }
-    // }
-
-    // window.onscroll = () => {
-    //     if (window.pageYOffset % 300 === 0) {
-    //         loadMorePhotos();
-    //     }
-    // };
-
     useEffect(() => {
         if (photosList.length === 0 && pageToGetPhotos === 1) {
             if (!isAuth) {

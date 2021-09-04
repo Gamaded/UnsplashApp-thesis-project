@@ -4,6 +4,7 @@
   ],
   "extends": ["eslint:all", "plugin:react/all"],
   "rules": {
+    "no-unused-vars": "off",
     "curly": "off",
     "camelcase": "off",
     "consistent-return": "off",

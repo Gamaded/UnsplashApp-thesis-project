@@ -1,9 +1,10 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
-import {login} from "../../store/actions/actions.js";
+import {setProfile} from "../../store/actions/actions.js";
 import {auth} from "../../store/reducers/getDataFromUnsplash";
 import AuthButton from "./AuthButton";
+import {getCookie} from "../../helpers";
 
 function Header () {
     const user = useSelector(state => state.user);
@@ -15,9 +16,9 @@ function Header () {
         dispatch(auth(code));
     }
 
-    if (localStorage.getItem("curUser") && !isAuth) {
-        const savedUser = JSON.parse(localStorage.getItem("curUser"));
-        dispatch(login(savedUser));
+    if (localStorage.getItem(getCookie("accToken")) && isAuth && user.unauth) {
+        const savedUser = JSON.parse(localStorage.getItem(getCookie("accToken")));
+        dispatch(setProfile(savedUser));
     }
 
     return (

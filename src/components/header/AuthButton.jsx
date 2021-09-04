@@ -1,11 +1,10 @@
 import React from "react";
-import {useSelector} from "react-redux";
 import styled from "styled-components";
 import {getCode} from "../../store/reducers/getDataFromUnsplash.js";
+import {useSelector} from "react-redux";
 
 function AuthButton () {
     const isAuth = useSelector(state => state.isAuth);
-
     if (isAuth) return null;
 
     return (
