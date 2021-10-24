@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ShowFeedItem from "./ShowFeedItem.jsx";
 
-function ShowFeedColumnsWrapper ({photosList}) {
+function ShowFeedColumnsWrapper ({ photosList }) {
     const [numberForAdapt, setNumberForAdapt] = useState(null);
     const columns = numberForAdapt ? setColumns() : [];
     function checkWindowWidth () {

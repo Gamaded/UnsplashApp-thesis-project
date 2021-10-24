@@ -1,26 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import RedirectToFull from "./RedirectToFull";
-import {DateLikesCont} from "../commonStyles";
-import {ItemDate, Likes, AuthorCont} from "../../elements";
+import { DateLikesCont } from "../commonStyles";
+import { ItemDate, Likes, AuthorCont } from "../../elements";
 
-function ShowFeedItem ({item}) {
-    const isAuth = useSelector(state => state.isAuth);
+function ShowFeedItem({ item }) {
+  const isAuth = useSelector(state => state.isAuth);
 
-    return (
-        <PhotosFeedItem>
-            <ItemPhoto alt={item.alt_description} src={item.urls.small} />
-            <ItemProps>
-                <AuthorCont item={item} />
-                <DateLikesCont>
-                    <ItemDate item={item} />
-                    <Likes item={item} isAuth={isAuth} />
-                </DateLikesCont>
-            </ItemProps>
-            <RedirectToFull item={item} />
-        </PhotosFeedItem>
-    );
+  return (
+    <PhotosFeedItem>
+      <ItemPhoto alt={item.alt_description} src={item.urls.small} />
+      <ItemProps>
+        <AuthorCont item={item} />
+        <DateLikesCont>
+          <ItemDate item={item} />
+          <Likes item={item} isAuth={isAuth} />
+        </DateLikesCont>
+      </ItemProps>
+      <RedirectToFull item={item} />
+    </PhotosFeedItem>
+  );
 }
 
 const PhotosFeedItem = styled.li`

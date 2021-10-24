@@ -1,6 +1,6 @@
-import {createApi} from "unsplash-js";
-import {addPhotosList, setProfile, like, unlike, addPhoto, setAuth} from "../actions/actions.js";
-import {getCookie} from "../../helpers";
+import { createApi } from "unsplash-js";
+import { addPhotosList, setProfile, like, unlike, addPhoto, setAuth } from "../actions/actions.js";
+import { getCookie } from "../../helpers";
 
 const clid = {
     "client_secret": "p5PHSSQPeNrXIES54icFqPiu-AAMDs9Bl8L3fgQ2gc0",
@@ -82,7 +82,7 @@ export function unlikePhoto (photoId) {
 
 export function getPhotosFromUnsplash (counter) {
     return async function fetchData (dispatch) {
-        const resault = await unsplash.photos.list({"page": counter, "perPage": 24})
+        const resault = await unsplash.photos.list({ "page": counter, "perPage": 24 })
             .then(res => {
                 return res.response.results;
             });

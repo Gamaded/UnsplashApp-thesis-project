@@ -1,7 +1,7 @@
 import React from "react";
-import styled, {keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-function PleaseWait ({background}) {
+function PleaseWait ({ background }) {
     const theme = {
         "light": {
             "primary": "#424242",

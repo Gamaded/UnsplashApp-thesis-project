@@ -4,4 +4,4 @@ import PleaseWait from "./PleaseWait";
 import Popup from "./Popup";
 import AuthorCont from "./AuthorCont";
 
-export {Likes, ItemDate, PleaseWait, Popup, AuthorCont};
+export { Likes, ItemDate, PleaseWait, Popup, AuthorCont };

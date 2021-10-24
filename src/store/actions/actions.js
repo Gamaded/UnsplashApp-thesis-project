@@ -1,7 +1,7 @@
 export function addPhoto (photo) {
     return {
         "type": "SET_CURRENT_PHOTO",
-        photo
+        payload: photo
     };
 }
 
@@ -14,27 +14,27 @@ export function setAuth () {
 export function setProfile (user) {
     return {
         "type": "SET_PROFILE",
-        user
+        payload: user
     };
 }
 
 export function addPhotosList (photosList) {
     return {
         "type": "SET_PHOTOS_LIST",
-        photosList
+        payload: photosList
     };
 }
 
 export function like (photo) {
     return {
         "type": "I_LIKE_IT",
-        photo
+        payload: photo
     };
 }
 
 export function unlike (photo) {
     return {
         "type": "I_DONT_LIKE_IT",
-        photo
+        payload: photo
     };
 }

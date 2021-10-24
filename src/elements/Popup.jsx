@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function Popup ({popup}) {
+function Popup ({ popup }) {
     return popup ? <PopupBlock>{"Необходимо авторизоваться"}</PopupBlock> : null;
 }
 

@@ -1,53 +1,53 @@
-import React, {useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import {getPhotosFromUnsplash, getPhotosFromUnsplashWithToken} from "../store/reducers/getDataFromUnsplash.js";
+import { getPhotosFromUnsplash, getPhotosFromUnsplashWithToken } from "../store/reducers/getDataFromUnsplash.js";
 import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper.jsx";
 import PleaseWait from "../elements/PleaseWait";
 
 function ShowFeed () {
-    const dispatch = useDispatch();
-    const photosList = useSelector(state => state.photosList);
-    const pageToGetPhotos = useSelector(state => state.pageToGetPhotos);
-    const isAuth = useSelector(state => state.isAuth);
+  const dispatch = useDispatch();
+  const photosList = useSelector(state => state.photosList);
+  const pageToGetPhotos = useSelector(state => state.pageToGetPhotos);
+  const isAuth = useSelector(state => state.isAuth);
 
-    useEffect(() => {
-        if (photosList.length === 0 && pageToGetPhotos === 1) {
-            if (!isAuth) {
-                dispatch(getPhotosFromUnsplash(pageToGetPhotos));
-                return;
-            }
-            dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
-        }
-    });
-
-    if (photosList.length === 0) {
-        return (
-            <ShowFeedContainer>
-                <PleaseWait background="light" />
-            </ShowFeedContainer>
-        );
+  useEffect(() => {
+    if (photosList.length === 0 && pageToGetPhotos === 1) {
+      if (!isAuth) {
+        dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+        return;
+      }
+      dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
     }
+  });
 
+  if (photosList.length === 0) {
     return (
-        <ShowFeedContainer
-            onClick={(event) => {
-                console.log(event.target);
-            }}
-        >
-            <ShowFeedColumnsWrapper
-                photosList={photosList}
-            />
-            <LoadMoreButton
-                type="button"
-                onClick={() => {
-                    return isAuth ? dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos)) : dispatch(getPhotosFromUnsplash(pageToGetPhotos));
-                }}
-            >
-                {"Показать ещё"}
-            </LoadMoreButton>
-        </ShowFeedContainer>
+      <ShowFeedContainer>
+        <PleaseWait background="light" />
+      </ShowFeedContainer>
     );
+  }
+
+  return (
+    <ShowFeedContainer
+      onClick={(event) => {
+        console.log(event.target);
+      }}
+    >
+      <ShowFeedColumnsWrapper
+        photosList={photosList}
+      />
+      <LoadMoreButton
+        type="button"
+        onClick={() => {
+          return isAuth ? dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos)) : dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+        }}
+      >
+        {"Показать ещё"}
+      </LoadMoreButton>
+    </ShowFeedContainer>
+  );
 }
 
 const ShowFeedContainer = styled.main`

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import {getCreationDate} from "../helpers";
+import { getCreationDate } from "../helpers";
 
-function ItemDate ({item}) {
+function ItemDate ({ item }) {
     const whenPhotoWasCreated = getCreationDate(item.created_at);
     return (
         <Date>

@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import {useDispatch} from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import {likePhoto, unlikePhoto} from "../store/reducers/getDataFromUnsplash";
+import { likePhoto, unlikePhoto } from "../store/reducers/getDataFromUnsplash";
 
-function Likes ({item, isAuth}) {
+function Likes ({ item, isAuth }) {
     const dispatch = useDispatch();
     const [likesCounter, setLikesCounter] = useState(item.likes);
     const [isLiked, setLiked] = useState(item.liked_by_user);

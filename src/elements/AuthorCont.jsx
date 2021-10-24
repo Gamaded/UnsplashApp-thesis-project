@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function AuthorCont ({item}) {
+function AuthorCont ({ item }) {
     return (
         <AuthorWrapper>
             <AuthorAvatar alt="author's avatar" src={item.user.profile_image.medium} />

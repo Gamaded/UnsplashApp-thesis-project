@@ -1,10 +1,10 @@
 import React from "react";
-import {useSelector, useDispatch} from "react-redux";
-import {addPhoto} from "../../store/actions/actions";
-import {Link} from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addPhoto } from "../../store/actions/actions";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-function RedirectToFull ({item}) {
+function RedirectToFull ({ item }) {
     const dispatch = useDispatch();
     const isAuth = useSelector(state => state.isAuth);
 
