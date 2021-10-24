@@ -19,7 +19,7 @@ function ShowFeed () {
       }
       dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
     }
-  });
+  }, []);
 
   if (photosList.length === 0) {
     return (

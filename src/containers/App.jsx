@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Router, Switch, Route, Redirect } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
 import { getCookie } from "../helpers";
