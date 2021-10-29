@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setProfile } from "../../store/actions/actions.js";
+import { setProfile } from "../../store/actions/actions.ts";
 import { auth } from "../../store/reducers/getDataFromUnsplash";
 import AuthButton from "./AuthButton";
 import { getCookie } from "../../helpers";

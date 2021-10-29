@@ -1,5 +1,5 @@
 import { createApi } from "unsplash-js";
-import { addPhotosList, setProfile, like, unlike, addPhoto, setAuth } from "../actions/actions.js";
+import { addPhotosList, setProfile, like, unlike, addPhoto, setAuth } from "../actions/actions.ts";
 import { getCookie } from "../../helpers";
 
 const clid = {
@@ -48,7 +48,6 @@ export function getProfile (token) {
         xhr.onload = () => {
             const profile = JSON.parse(xhr.response);
             localStorage.setItem(token, xhr.response);
-            console.log(profile);
             dispatch(setProfile(profile));
         };
     };
@@ -91,13 +90,14 @@ export function getPhotosFromUnsplash (counter) {
 }
 
 export function getPhotosFromUnsplashWithToken (counter) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", `https://api.unsplash.com/photos?page=${counter}&per_page=24`);
         xhr.setRequestHeader("Authorization", `Bearer ${clid.accToken}`);
         xhr.onload = () => {
+            const previousList = getState().photosList;
             const resault = JSON.parse(xhr.response);
-            dispatch(addPhotosList(resault));
+            dispatch(addPhotosList([...previousList, ...resault]));
         };
         xhr.send();
     };
