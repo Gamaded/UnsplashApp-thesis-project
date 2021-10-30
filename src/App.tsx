@@ -3,11 +3,11 @@ import React from "react";
 import {BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
-import { getCookie } from "../helpers";
-import ShowFullscreen from "../components/fullscreen-viewing/ShowFullscreen.jsx";
-import ShowFeed from "./ShowFeed.jsx";
-import Header from "../components/header/Header.jsx";
-import { setAuth } from "../store/actions/actions";
+import { getCookie } from "./helpers";
+import ShowFullscreen from "./components/fullscreen-viewing/ShowFullscreen";
+import ShowFeed from "./containers/ShowFeed";
+import Header from "./components/header/Header";
+import { setAuth } from "./store/actions/actions";
 
 function UnsplashApp() {
   const dispatch = useDispatch();
@@ -15,8 +15,8 @@ function UnsplashApp() {
   const history = createBrowserHistory();
 
   return (
-    <Router history={history}>
-      <Header exact path="/auth" />
+    <Router>
+      <Header />
       <Switch>
         <Route exact path="/auth" >
           <Redirect to="/home" />

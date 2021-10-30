@@ -1,16 +1,17 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getCurrentPhoto } from "../../store/reducers/getDataFromUnsplash";
 import { DateLikesCont } from "../commonStyles";
 import { AuthorCont, Likes, PleaseWait, ItemDate } from "../../elements";
 import { useHistory } from "react-router";
+import { useAppSelector } from "../../helpers";
 
 function ShowFullscreeen () {
     const dispatch = useDispatch();
     const history = useHistory();
-    const isAuth = useSelector(state => state.isAuth);
-    const currentPhoto = useSelector(state => state.currentPhoto);
+    const isAuth = useAppSelector(state => state.isAuth);
+    const currentPhoto = useAppSelector(state => state.currentPhoto);
     const photoId = window.location.search.split("photoId=")[1];
 
     if (!currentPhoto) {
@@ -28,17 +29,17 @@ function ShowFullscreeen () {
                 <FullScreenBackArrow
                     type="button"
                     onClick={() => {
-                        history.goBack();
+                        history.back();
                     }}
                 />
-                <AuthorCont item={currentPhoto} />
+                <AuthorCont photo={currentPhoto} />
             </FullScreenHeader>
             <FullScreenContent>
-                <FullScreenPhoto alt={currentPhoto.alt_description} src={currentPhoto.urls.full} />
+                <FullScreenPhoto alt={currentPhoto.alt_description || ""} src={currentPhoto.urls.full} />
                 <FullScreenFooter>
                     <DateLikesCont>
-                        <ItemDate item={currentPhoto} />
-                        <Likes item={currentPhoto} isAuth={isAuth} />
+                        <ItemDate photo={currentPhoto} />
+                        <Likes photo={currentPhoto} isAuth={isAuth} />
                     </DateLikesCont>
                 </FullScreenFooter>
             </FullScreenContent>

@@ -1,18 +1,21 @@
+import {Full as IUser} from "unsplash-js/dist/methods/users/types";
+import { Full as IPhoto } from "unsplash-js/dist/methods/photos/types";
+
+export type User = IUser;
+export interface Photo extends IPhoto {
+    liked_by_user: boolean;
+};
+
 export type DefaultUser = {
-    unauth: boolean;
     username: string;
     profile_image: {
         medium: string;
     }
 }
 
-export type User = any;
-
-export type Photo = any;
-
 export type InitialState = {
     photosList: Photo[];
-    currentPhoto: Photo;
+    currentPhoto: null | Photo;
     user: DefaultUser | User;
     isAuth: boolean;
     pageToGetPhotos: number;

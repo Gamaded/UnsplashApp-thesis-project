@@ -4,21 +4,27 @@ import { useSelector } from "react-redux";
 import RedirectToFull from "./RedirectToFull";
 import { DateLikesCont } from "../commonStyles";
 import { ItemDate, Likes, AuthorCont } from "../../elements";
+import { Photo } from "../../store/reducers/types"
+import { useAppSelector } from "../../helpers";
 
-function ShowFeedItem({ item }) {
-  const isAuth = useSelector(state => state.isAuth);
+type Props = {
+  photo: Photo;
+}
+
+const ShowFeedItem: React.FC<Props> = ({ photo }) => {
+  const isAuth = useAppSelector(state => state.isAuth);
 
   return (
     <PhotosFeedItem>
-      <ItemPhoto alt={item.alt_description} src={item.urls.small} />
+      <ItemPhoto alt={photo.alt_description || ""} src={photo.urls.small} />
       <ItemProps>
-        <AuthorCont item={item} />
+        <AuthorCont photo={photo} />
         <DateLikesCont>
-          <ItemDate item={item} />
-          <Likes item={item} isAuth={isAuth} />
+          <ItemDate photo={photo} />
+          <Likes photo={photo} isAuth={isAuth} />
         </DateLikesCont>
       </ItemProps>
-      <RedirectToFull item={item} />
+      <RedirectToFull photo={photo} />
     </PhotosFeedItem>
   );
 }

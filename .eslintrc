@@ -4,6 +4,8 @@
   ],
   "extends": ["eslint:all", "plugin:react/all"],
   "rules": {
+    "react/jsx-filename-extension": "off",
+    "react/function-component-definition": "off",
     "space-before-function-paren": ["warn", "always"],
     "react/jsx-indent": "off",
     "react/jsx-indent-props": "off",

@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { getCode } from "../../store/reducers/getDataFromUnsplash.js";
-import { useSelector } from "react-redux";
 
-function AuthButton () {
-    const isAuth = useSelector(state => state.isAuth);
+type Props = {
+    isAuth: boolean;
+}
+
+const AuthButton: React.FC<Props> = ({isAuth}) => {
     if (isAuth) return null;
-
     return (
         <StAuthButton
             type="button"

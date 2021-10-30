@@ -1,29 +1,40 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-function PleaseWait ({ background }) {
-    const theme = {
-        "light": {
-            "primary": "#424242",
-            "secondary": "#000000e0"
-        },
-        "dark": {
-            "primary": "#ffffff",
-            "secondary": "#ffffff"
-        }
-    };
+type Props = {
+  background: string;
+}
 
-    return (
-        <PleaseWaitCont >
-            <PleaseWaitText theme={theme[background]} >{"Пожалуйста подождите"}</PleaseWaitText>
-            <LoaderRing theme={theme[background]} >
-                <div />
-                <div />
-                <div />
-                <div />
-            </LoaderRing>
-        </PleaseWaitCont>
-    );
+type Theme = {
+  [key: string]: {
+    primary: string;
+    secondary: string;
+  }
+}
+
+const PleaseWait: React.FC<Props> = ({ background }) => {
+  const theme: Theme = {
+    "light": {
+      "primary": "#424242",
+      "secondary": "#000000e0"
+    },
+    "dark": {
+      "primary": "#ffffff",
+      "secondary": "#ffffff"
+    }
+  };
+
+  return (
+    <PleaseWaitCont >
+      <PleaseWaitText theme={theme[background]} >{"Пожалуйста подождите"}</PleaseWaitText>
+      <LoaderRing theme={theme[background]} >
+        <div />
+        <div />
+        <div />
+        <div />
+      </LoaderRing>
+    </PleaseWaitCont>
+  );
 }
 
 const PleaseWaitCont = styled.div`

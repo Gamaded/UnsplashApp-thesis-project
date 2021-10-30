@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import ShowFeedItem from "./ShowFeedItem.jsx";
+import ShowFeedItem from "./ShowFeedItem";
+import { Photo } from "../../store/reducers/types";
 
-function ShowFeedColumnsWrapper ({ photosList }) {
-    const [numberForAdapt, setNumberForAdapt] = useState(null);
+type Props = {
+    photosList: Photo[];
+}
+
+const ShowFeedColumnsWrapper: React.FC<Props> = ({ photosList }) => {
+    const [numberForAdapt, setNumberForAdapt] = useState<number>(0);
     const columns = numberForAdapt ? setColumns() : [];
     function checkWindowWidth () {
         if (window.innerWidth > 1024 && numberForAdapt !== 3) {
@@ -21,8 +26,10 @@ function ShowFeedColumnsWrapper ({ photosList }) {
         checkWindowWidth();
     };
 
+    type PrimaryColumn = Photo[][];
+
     function setColumns () {
-        const primaryColumnsArr = [];
+        const primaryColumnsArr: PrimaryColumn = [];
         for (let iter = 0; iter < numberForAdapt; iter++) {
             primaryColumnsArr[iter] = [];
         }
@@ -44,9 +51,9 @@ function ShowFeedColumnsWrapper ({ photosList }) {
                     return (
                         <Column key={columns.indexOf(column)}>
                             {
-                                column.map(item => {
+                                column.map(photo => {
                                     return (
-                                        <ShowFeedItem item={item} key={item.id} />
+                                        <ShowFeedItem photo={photo} key={photo.id} />
                                     );
                                 })
                             }
