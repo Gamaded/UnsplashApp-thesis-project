@@ -2,14 +2,15 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getPhotosFromUnsplash, getPhotosFromUnsplashWithToken } from "../store/reducers/getDataFromUnsplash.js";
-import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper.jsx";
+import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper";
 import PleaseWait from "../elements/PleaseWait";
+import { useAppSelector } from "../helpers";
 
 function ShowFeed () {
   const dispatch = useDispatch();
-  const photosList = useSelector(state => state.photosList);
-  const pageToGetPhotos = useSelector(state => state.pageToGetPhotos);
-  const isAuth = useSelector(state => state.isAuth);
+  const photosList = useAppSelector(state => state.photosList);
+  const pageToGetPhotos = useAppSelector(state => state.pageToGetPhotos);
+  const isAuth = useAppSelector(state => state.isAuth);
 
   useEffect(() => {
     if (photosList.length === 0 && pageToGetPhotos === 1) {
@@ -19,7 +20,7 @@ function ShowFeed () {
       }
       dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
     }
-  });
+  }, []);
 
   if (photosList.length === 0) {
     return (

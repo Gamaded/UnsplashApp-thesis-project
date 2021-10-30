@@ -1,15 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { Photo } from "../store/reducers/types";
 
-function AuthorCont ({ item }) {
-    return (
-        <AuthorWrapper>
-            <AuthorAvatar alt="author's avatar" src={item.user.profile_image.medium} />
-            <AuthorName>
-                <a href={item.user.links.html} target="_blank" rel="noopener noreferrer">{item.user.username}</a>
-            </AuthorName>
-        </AuthorWrapper>
-    );
+type Props = {
+  photo: Photo;
+}
+
+const AuthorCont: React.FC<Props> = ({ photo }) => {
+  return (
+    <AuthorWrapper>
+      <AuthorAvatar alt="author's avatar" src={photo.user.profile_image.medium} />
+      <AuthorName>
+        <a href={photo.user.links.html} target="_blank" rel="noopener noreferrer">{photo.user.username}</a>
+      </AuthorName>
+    </AuthorWrapper>
+  );
 }
 
 const AuthorWrapper = styled.div`

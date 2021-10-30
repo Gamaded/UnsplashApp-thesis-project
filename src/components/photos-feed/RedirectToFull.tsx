@@ -3,10 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { addPhoto } from "../../store/actions/actions";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useAppSelector } from "../../helpers";
+import { Photo } from "../../store/reducers/types";
 
-function RedirectToFull ({ item }) {
+type Props = {
+    photo: Photo;
+}
+
+const RedirectToFull: React.FC<Props> = ({ photo }) => {
     const dispatch = useDispatch();
-    const isAuth = useSelector(state => state.isAuth);
+    const isAuth = useAppSelector(state => state.isAuth);
 
     if (!isAuth) {
         return (
@@ -17,12 +23,12 @@ function RedirectToFull ({ item }) {
     return (
         <Link to={{
             "pathname": "/fullscreen",
-            "search": `?photoId=${item.id}`
+            "search": `?photoId=${photo.id}`
         }}
         >
             <ShowFull
                 onClick={() => {
-                    dispatch(addPhoto(item));
+                    dispatch(addPhoto(photo));
                 }}
             />
         </Link>

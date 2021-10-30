@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-function Popup ({ popup }) {
+type Props = {
+    popup: boolean;
+}
+
+const Popup: React.FC<Props> = ({ popup }) => {
     return popup ? <PopupBlock>{"Необходимо авторизоваться"}</PopupBlock> : null;
 }
 
