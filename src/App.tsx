@@ -1,21 +1,21 @@
 import React from "react";
 
-import {BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Router, Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
 import { getCookie } from "./helpers";
 import ShowFullscreen from "./components/fullscreen-viewing/ShowFullscreen";
 import ShowFeed from "./containers/ShowFeed";
 import Header from "./components/header/Header";
-import { setAuth } from "./store/actions/actions";
+import { login } from "./store/actions/actions";
 
 function UnsplashApp() {
   const dispatch = useDispatch();
-  if (getCookie("login_status") === "logged_in") dispatch(setAuth());
+  if (getCookie("login_status") === "logged_in") dispatch(login());
   const history = createBrowserHistory();
 
   return (
-    <Router>
+    <Router history={history}>
       <Header />
       <Switch>
         <Route exact path="/auth" >

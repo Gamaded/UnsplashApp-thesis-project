@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { getCode } from "../../store/reducers/getDataFromUnsplash.js";
+import { getCode } from "../../store/actions/getDataFromUnsplash";
 
 type Props = {
     isAuth: boolean;

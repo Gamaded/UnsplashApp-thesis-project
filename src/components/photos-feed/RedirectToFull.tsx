@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addPhoto } from "../../store/actions/actions";
+import { useDispatch } from "react-redux";
+import { setCurrentPhoto } from "../../store/actions/actions";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAppSelector } from "../../helpers";
@@ -11,28 +11,28 @@ type Props = {
 }
 
 const RedirectToFull: React.FC<Props> = ({ photo }) => {
-    const dispatch = useDispatch();
-    const isAuth = useAppSelector(state => state.isAuth);
+  const dispatch = useDispatch();
+  const isAuth = useAppSelector(state => state.isAuth);
 
-    if (!isAuth) {
-        return (
-            <ShowFull />
-        );
-    }
+  if (!isAuth) {
+      return (
+        <ShowFull />
+      );
+  }
 
-    return (
-        <Link to={{
-            "pathname": "/fullscreen",
-            "search": `?photoId=${photo.id}`
-        }}
-        >
-            <ShowFull
-                onClick={() => {
-                    dispatch(addPhoto(photo));
-                }}
-            />
-        </Link>
-    );
+  return (
+    <Link to={{
+        "pathname": "/fullscreen",
+        "search": `?photoId=${photo.id}`
+    }}
+    >
+      <ShowFull
+          onClick={() => {
+              dispatch(setCurrentPhoto(photo));
+          }}
+      />
+    </Link>
+  );
 }
 
 const ShowFull = styled.div`
