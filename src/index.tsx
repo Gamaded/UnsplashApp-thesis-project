@@ -4,7 +4,7 @@ import "./index.css";
 import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import UnsplashApp from "./App";
-import store from "./store/store.js";
+import store from "./store/store";
 
 ReactDOM.render(
     <Provider store={store}>

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setProfile } from "../../store/actions/actions";
-import { auth } from "../../store/reducers/getDataFromUnsplash";
+import { setProfile, login } from "../../store/actions/actions";
 import AuthButton from "./AuthButton";
 import { getCookie } from "../../helpers";
 import { InitialState } from "../../store/reducers/types";
@@ -14,16 +13,15 @@ const Header: React.FC = () => {
   const code = window.location.search.split("code=")[1];
   const accToken = getCookie("accToken");
 
-  if (code && !isAuth) {
-    dispatch(auth(code));
-  }
-
-  if (accToken && isAuth && Object.keys(user).length < 3) {
-    const savedUser = localStorage.getItem(accToken);
-    if (savedUser) {
-      dispatch(setProfile(JSON.parse(savedUser)));
+  useEffect(() => {
+    if (code && !isAuth) {
+      dispatch(login(code));
     }
-  }
+  }, [code])
+
+  useEffect(() => {
+    if (accToken) dispatch(setProfile(accToken));
+  }, [accToken])
 
   return (
     <StHeader>

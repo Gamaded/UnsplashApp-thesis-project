@@ -34,11 +34,11 @@ const appData = handleActions({
         };
     },
     SET_PHOTOS_LIST: (state, action: any) => {
-        console.log(action.payload);
+
         return {
             ...state,
             pageToGetPhotos: state.pageToGetPhotos + 1,
-            photosList: action.payload
+            photosList: [...state.photosList, ...action.payload]
         };
     }
 }, defaultState);

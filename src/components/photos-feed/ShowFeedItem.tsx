@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 import RedirectToFull from "./RedirectToFull";
 import { DateLikesCont } from "../commonStyles";
 import { ItemDate, Likes, AuthorCont } from "../../elements";

@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getCurrentPhoto } from "../../store/reducers/getDataFromUnsplash";
+import { setCurrentPhoto } from "../../store/actions/actions";
 import { DateLikesCont } from "../commonStyles";
 import { AuthorCont, Likes, PleaseWait, ItemDate } from "../../elements";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../helpers";
 
 function ShowFullscreeen () {
@@ -13,9 +13,8 @@ function ShowFullscreeen () {
     const isAuth = useAppSelector(state => state.isAuth);
     const currentPhoto = useAppSelector(state => state.currentPhoto);
     const photoId = window.location.search.split("photoId=")[1];
-
     if (!currentPhoto) {
-        dispatch(getCurrentPhoto(photoId));
+        dispatch(setCurrentPhoto(photoId));
         return (
             <FullScreenCont>
                 <PleaseWait background="dark" />
@@ -29,7 +28,7 @@ function ShowFullscreeen () {
                 <FullScreenBackArrow
                     type="button"
                     onClick={() => {
-                        history.back();
+                        history.goBack()
                     }}
                 />
                 <AuthorCont photo={currentPhoto} />

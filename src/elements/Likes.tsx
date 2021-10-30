@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { likePhoto, unlikePhoto } from "../store/reducers/getDataFromUnsplash";
+import { likePhoto, unlikePhoto } from "../store/actions/actions";
 import { Photo } from "../store/reducers/types";
 
 type Props = {

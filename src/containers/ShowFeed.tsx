@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getPhotosFromUnsplash, getPhotosFromUnsplashWithToken } from "../store/reducers/getDataFromUnsplash.js";
+import { addPhotosList } from "../store/actions/actions";
 import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper";
 import PleaseWait from "../elements/PleaseWait";
 import { useAppSelector } from "../helpers";
@@ -10,15 +10,10 @@ function ShowFeed () {
   const dispatch = useDispatch();
   const photosList = useAppSelector(state => state.photosList);
   const pageToGetPhotos = useAppSelector(state => state.pageToGetPhotos);
-  const isAuth = useAppSelector(state => state.isAuth);
 
   useEffect(() => {
     if (photosList.length === 0 && pageToGetPhotos === 1) {
-      if (!isAuth) {
-        dispatch(getPhotosFromUnsplash(pageToGetPhotos));
-        return;
-      }
-      dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos));
+      dispatch(addPhotosList(pageToGetPhotos));
     }
   }, []);
 
@@ -42,7 +37,7 @@ function ShowFeed () {
       <LoadMoreButton
         type="button"
         onClick={() => {
-          return isAuth ? dispatch(getPhotosFromUnsplashWithToken(pageToGetPhotos)) : dispatch(getPhotosFromUnsplash(pageToGetPhotos));
+          dispatch(addPhotosList(pageToGetPhotos));
         }}
       >
         {"Показать ещё"}
