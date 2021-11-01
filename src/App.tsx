@@ -4,9 +4,9 @@ import { Router, Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createBrowserHistory } from "history";
 import { getCookie } from "./helpers";
-import ShowFullscreen from "./components/fullscreen-viewing/ShowFullscreen";
-import ShowFeed from "./containers/ShowFeed";
-import Header from "./components/header/Header";
+import ShowFullscreen from "./pages/fullscreen/ShowFullscreen";
+import ShowFeed from "./pages/home/ShowFeed";
+import Header from "./commonModules/header/Header"
 import { login } from "./store/actions/actions";
 
 function UnsplashApp() {

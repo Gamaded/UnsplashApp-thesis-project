@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { addPhotosList } from "../store/actions/actions";
-import ShowFeedColumnsWrapper from "../components/photos-feed/ShowFeedColumnsWrapper";
-import PleaseWait from "../elements/PleaseWait";
-import { useAppSelector } from "../helpers";
+import { addPhotosList } from "../../store/actions/actions";
+import ShowFeedColumnsWrapper from "./ShowFeedColumnsWrapper";
+import PleaseWait from "../../components/PleaseWait";
+import { useAppSelector } from "../../helpers";
 
 function ShowFeed () {
   const dispatch = useDispatch();

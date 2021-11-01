@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setCurrentPhoto } from "../../store/actions/actions";
-import { DateLikesCont } from "../commonStyles";
-import { AuthorCont, Likes, PleaseWait, ItemDate } from "../../elements";
+import { DateLikes, AuthorCont } from "../../commonModules";
+import { PleaseWait } from "../../components";
 import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../helpers";
 
@@ -36,10 +36,7 @@ function ShowFullscreeen () {
             <FullScreenContent>
                 <FullScreenPhoto alt={currentPhoto.alt_description || ""} src={currentPhoto.urls.full} />
                 <FullScreenFooter>
-                    <DateLikesCont>
-                        <ItemDate photo={currentPhoto} />
-                        <Likes photo={currentPhoto} isAuth={isAuth} />
-                    </DateLikesCont>
+                    <DateLikes photo={currentPhoto} isAuth={isAuth} />
                 </FullScreenFooter>
             </FullScreenContent>
         </FullScreenCont>

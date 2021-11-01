@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import RedirectToFull from "./RedirectToFull";
-import { DateLikesCont } from "../commonStyles";
-import { ItemDate, Likes, AuthorCont } from "../../elements";
+import { AuthorCont, DateLikes } from "../../commonModules";
 import { Photo } from "../../store/reducers/types"
 import { useAppSelector } from "../../helpers";
 
@@ -18,10 +17,7 @@ const ShowFeedItem: React.FC<Props> = ({ photo }) => {
       <ItemPhoto alt={photo.alt_description || ""} src={photo.urls.small} />
       <ItemProps>
         <AuthorCont photo={photo} />
-        <DateLikesCont>
-          <ItemDate photo={photo} />
-          <Likes photo={photo} isAuth={isAuth} />
-        </DateLikesCont>
+        <DateLikes photo={photo} isAuth={isAuth} />
       </ItemProps>
       <RedirectToFull photo={photo} />
     </PhotosFeedItem>

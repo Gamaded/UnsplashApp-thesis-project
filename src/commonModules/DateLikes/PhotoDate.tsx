@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { getCreationDate } from "../helpers";
-import { Photo } from "../store/reducers/types";
+import { getCreationDate } from "../../helpers";
+import { Photo } from "../../store/reducers/types";
 
 type Props = {
   photo: Photo;
 }
 
-const ItemDate: React.FC<Props> = ({ photo }) => {
+const PhotoDate: React.FC<Props> = ({ photo }) => {
   const whenPhotoWasCreated = getCreationDate(photo.created_at);
   return (
     <Date>
@@ -24,4 +24,4 @@ const Date = styled.div`
     border-radius: 5px;
 `;
 
-export default ItemDate;
+export default PhotoDate;
