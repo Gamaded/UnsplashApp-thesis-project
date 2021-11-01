@@ -4,65 +4,65 @@ import ShowFeedItem from "./ShowFeedItem";
 import { Photo } from "../../store/reducers/types";
 
 type Props = {
-    photosList: Photo[];
+  photosList: Photo[];
 }
 
 const ShowFeedColumnsWrapper: React.FC<Props> = ({ photosList }) => {
-    const [numberForAdapt, setNumberForAdapt] = useState<number>(0);
-    const columns = numberForAdapt ? setColumns() : [];
-    function checkWindowWidth () {
-        if (window.innerWidth > 1024 && numberForAdapt !== 3) {
-            setNumberForAdapt(3);
-        }
-        if (window.innerWidth <= 1024 && window.innerWidth > 575 && numberForAdapt !== 2) {
-            setNumberForAdapt(2);
-        }
-        if (window.innerWidth < 575 && numberForAdapt !== 1) {
-            setNumberForAdapt(1);
-        }
+  const [numberForAdapt, setNumberForAdapt] = useState<number>(0);
+  const columns = numberForAdapt ? setColumns() : [];
+  function checkWindowWidth() {
+    if (window.innerWidth > 1024 && numberForAdapt !== 3) {
+      setNumberForAdapt(3);
     }
-
-    window.onresize = () => {
-        checkWindowWidth();
-    };
-
-    type PrimaryColumn = Photo[][];
-
-    function setColumns () {
-        const primaryColumnsArr: PrimaryColumn = [];
-        for (let iter = 0; iter < numberForAdapt; iter++) {
-            primaryColumnsArr[iter] = [];
-        }
-        for (let iter = 0, jter = 0; jter < photosList.length; iter++, jter++) {
-            iter = iter === numberForAdapt ? 0 : iter;
-            primaryColumnsArr[iter].push(photosList[jter]);
-        }
-        return primaryColumnsArr;
+    if (window.innerWidth <= 1024 && window.innerWidth > 575 && numberForAdapt !== 2) {
+      setNumberForAdapt(2);
     }
+    if (window.innerWidth < 575 && numberForAdapt !== 1) {
+      setNumberForAdapt(1);
+    }
+  }
 
-    useEffect(() => {
-        if (!numberForAdapt) checkWindowWidth();
-    });
+  window.onresize = () => {
+    checkWindowWidth();
+  };
 
-    return (
-        <ColumnsWrapper id="columns-wrapper">
-            {
-                columns.map(column => {
-                    return (
-                        <Column key={columns.indexOf(column)}>
-                            {
-                                column.map(photo => {
-                                    return (
-                                        <ShowFeedItem photo={photo} key={photo.id} />
-                                    );
-                                })
-                            }
-                        </Column>
-                    );
+  type PrimaryColumn = Photo[][];
+
+  function setColumns() {
+    const primaryColumnsArr: PrimaryColumn = [];
+    for (let iter = 0; iter < numberForAdapt; iter++) {
+      primaryColumnsArr[iter] = [];
+    }
+    for (let iter = 0, jter = 0; jter < photosList.length; iter++, jter++) {
+      iter = iter === numberForAdapt ? 0 : iter;
+      primaryColumnsArr[iter].push(photosList[jter]);
+    }
+    return primaryColumnsArr;
+  }
+
+  useEffect(() => {
+    checkWindowWidth();
+  }, []);
+
+  return (
+    <ColumnsWrapper id="columns-wrapper">
+      {
+        columns.map(column => {
+          return (
+            <Column key={columns.indexOf(column)}>
+              {
+                column.map(photo => {
+                  return (
+                    <ShowFeedItem photo={photo} key={photo.id} />
+                  );
                 })
-            }
-        </ColumnsWrapper>
-    );
+              }
+            </Column>
+          );
+        })
+      }
+    </ColumnsWrapper>
+  );
 }
 
 const ColumnsWrapper = styled.div`
