@@ -34,4 +34,8 @@ export function getCookie(cookieName: string) {
   return null;
 }
 
+export function deleteCookie(cookieName: string) {
+  document.cookie = `${cookieName}=""; path=/; max-age=-1`;
+}
+
 export const useAppSelector: TypedUseSelectorHook<InitialState> = useSelector;

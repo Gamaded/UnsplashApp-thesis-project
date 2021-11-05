@@ -1,27 +1,31 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setProfile, login } from "../../store/actions/actions";
+import { getCookie, useAppSelector } from "../../helpers";
 import AuthButton from "./AuthButton";
-import { getCookie } from "../../helpers";
-import { InitialState } from "../../store/reducers/types";
 
 const Header: React.FC = () => {
-  const user = useSelector((state: InitialState) => state.user);
-  const isAuth = useSelector((state: InitialState) => state.isAuth);
+  const isAuth = useAppSelector(state => state.isAuth);
+  const user = useAppSelector(state => state.user);
   const dispatch = useDispatch();
   const code = window.location.search.split("code=")[1];
   const accToken = getCookie("accToken");
-
   useEffect(() => {
     if (code && !isAuth) {
       dispatch(login(code));
     }
-  }, [code])
+  }, [code]);
 
   useEffect(() => {
     if (accToken) dispatch(setProfile(accToken));
-  }, [accToken])
+  }, [accToken]);
+
+  useEffect(() => {
+    if (!isAuth) dispatch({
+      type: "REMOVE_PROFILE"
+    });
+  }, [isAuth]);
 
   return (
     <StHeader>
@@ -33,15 +37,15 @@ const Header: React.FC = () => {
 }
 
 const StHeader = styled.header`
-    position: fixed;
-    z-index: 10;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
-    background-color: #424242;
-    box-shadow: 0 3px 20px;
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0px;
+  background-color: #424242;
+  box-shadow: 0 3px 20px;
 `;
 
 const StUserAvatar = styled.img`
