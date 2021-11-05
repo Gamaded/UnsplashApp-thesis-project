@@ -24,8 +24,8 @@ export function logOut () {
   if (token) localStorage.removeItem(token);
   deleteCookie("accToken");
   return {
-    type: "AUTH"
-  }
+    type: "REMOVE_PROFILE"
+  };
 }
 
 export function setProfile (token: string) {

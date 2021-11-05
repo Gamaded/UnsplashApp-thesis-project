@@ -24,7 +24,7 @@ const appData = handleActions({
   AUTH: (state) => {
     return {
       ...state,
-      isAuth: state.isAuth === false
+      isAuth: true
     };
   },
   SET_PROFILE: (state, action: any) => {
@@ -36,11 +36,11 @@ const appData = handleActions({
   REMOVE_PROFILE: (state) => {
     return {
       ...state,
-      user: defaultUser
+      user: defaultUser,
+      isAuth: false
     }
   },
   SET_PHOTOS_LIST: (state, action: any) => {
-
     return {
       ...state,
       pageToGetPhotos: state.pageToGetPhotos + 1,

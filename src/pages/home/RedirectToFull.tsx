@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { setCurrentPhoto } from "../../store/actions/actions";
 import { Link } from "react-router-dom";
@@ -11,6 +12,7 @@ type Props = {
 }
 
 const RedirectToFull: React.FC<Props> = ({ photo }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const isAuth = useAppSelector(state => state.isAuth);
 
@@ -21,17 +23,12 @@ const RedirectToFull: React.FC<Props> = ({ photo }) => {
   }
 
   return (
-    <Link to={{
-        "pathname": "/fullscreen",
-        "search": `?photoId=${photo.id}`
-    }}
-    >
-      <ShowFull
-          onClick={() => {
-              dispatch(setCurrentPhoto(photo));
-          }}
-      />
-    </Link>
+    <ShowFull
+      onClick={() => {
+        history.push(`/fullscreen?photoId=${photo.id}`)
+        dispatch(setCurrentPhoto(photo));
+      }}
+    />
   );
 }
 
