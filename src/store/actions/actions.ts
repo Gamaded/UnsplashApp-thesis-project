@@ -1,4 +1,5 @@
 import { Photo } from "../reducers/types";
+import { deleteCookie, getCookie } from "../../helpers";
 import { getPhotosFromUnsplashReq, getProfileReq, likePhotoReq, unlikePhotoReq, getCurrentPhotoReq, getTokenReq } from "./getDataFromUnsplash";
 
 export function login (code?: string) {
@@ -17,6 +18,16 @@ export function login (code?: string) {
   }
 }
 
+export function logOut () {
+  deleteCookie("login_status");
+  const token = getCookie("accToken");
+  if (token) localStorage.removeItem(token);
+  deleteCookie("accToken");
+  return {
+    type: "REMOVE_PROFILE"
+  };
+}
+
 export function setProfile (token: string) {
   return async (dispatch: any) => {
     const savedUser = localStorage.getItem(token);
@@ -24,7 +35,8 @@ export function setProfile (token: string) {
       dispatch({
         type: "SET_PROFILE",
         payload: JSON.parse(savedUser)
-      })
+      });
+      return;
     }
     const user = await getProfileReq(token);
     localStorage.setItem(token, JSON.stringify(user));

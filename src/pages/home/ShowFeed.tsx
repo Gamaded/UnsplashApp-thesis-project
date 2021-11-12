@@ -50,7 +50,7 @@ const ShowFeedContainer = styled.main`
     max-width: 1440px;
     min-width: 320px;
     margin: 0 auto;
-    padding-top: 100px;
+    padding-top: 20px;
     padding-bottom: 50px;
     text-align: center;
 `;

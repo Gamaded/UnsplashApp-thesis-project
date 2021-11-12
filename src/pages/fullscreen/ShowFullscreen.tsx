@@ -49,7 +49,6 @@ const FullScreenCont = styled.div`
     align-content: flex-start;
     width: 100%;
     height: 100vh;
-    padding-top: 90px;
     background-color: #000000e0;
 `;
 
